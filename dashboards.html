@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboards — Inside My AI Workflow</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="theme-dashboards">
+
+<div class="hairline"></div>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="mark">AI</span> Inside My AI Workflow</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="dashboards.html" class="active">Dashboards</a>
+      <a href="work-tracker-guide.html">Work Tracker</a>
+      <a href="second-mind.html">The Second Mind</a>
+      <a href="pipelines.html">Pipelines</a>
+      <a href="skills.html">Skills</a>
+      <a href="glossary.html">Glossary</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <span class="eyebrow">Practical tools</span>
+    <h1>The Dashboards</h1>
+    <p class="lead">Small, single-purpose web apps that solve a real, specific problem in my life. None of them are products — they're tools I built for an audience of one (or a small household, or one friend).</p>
+  </div>
+</header>
+
+<section class="tight">
+  <div class="container">
+    <p>A quick note before the gallery: the BIM Coordination Studio below is a real tool running on a real, live project at work, so that one stays at the level of structure and workflow, not project specifics. Otherwise, treat each entry below less like "here's what Shadi built" and more like a small case study — what the problem was, what the tool actually does, and where the same pattern might be useful to you, even if you never touch a Google Sheet.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">The pattern, in detail</span>
+      <h2>Sheet → Script → Page → Link</h2>
+      <p>Every dashboard below is a variation on the same four pieces. Here's what each one is actually doing.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Piece</th><th>What it is</th><th>What it's doing</th></tr></thead>
+        <tbody>
+          <tr><td>Google Sheet</td><td>A normal spreadsheet</td><td>Holds the actual data as rows — one row per listing, invoice, task, recipe, whatever the dashboard is about. Free, and Google already handles backups and access.</td></tr>
+          <tr><td>Apps Script</td><td>Google's built-in scripting layer (JavaScript-based)</td><td>Lives inside the sheet itself. Reads and writes rows, runs the logic ("flag anything over budget," "add this row only if it's not a duplicate"), and is the layer that talks to an AI when one is involved.</td></tr>
+          <tr><td>HTML page</td><td>A single web page (code, not a separate app)</td><td>The actual thing you look at — cards, a kanban board, a map, charts. It calls the script for data and re-renders when something changes.</td></tr>
+          <tr><td>Web App deployment</td><td>One menu action in the Apps Script editor</td><td>Turns the page into a real URL you can open from a phone or bookmark, without paying for hosting or maintaining a server.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout note">
+      <span class="callout-label">The one annoying gotcha</span>
+      <p>Editing the code doesn't automatically update the live link. You have to go back into the deployment settings and push a "new version" to the <em>same</em> deployment — otherwise you accidentally end up with a second, different URL. Small thing, but it trips people up the first time.</p>
+    </div>
+
+    <div class="callout security">
+      <span class="callout-label">A real lesson learned</span>
+      <p>The moment a dashboard's link is set to "anyone with the link can open it," anyone can also try hitting the same endpoints the page itself uses to write data. The fix doesn't need to be fancy: a single shared password-like value gets checked on every write, and requests without it are rejected. It's not bank-grade security, but it stops a leaked link from turning into an open door — worth knowing even for tools nobody else will ever see.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">The gallery</span>
+      <h2>What I've actually built</h2>
+      <p>For each one: what the problem was, what the tool actually does, and a short note on where the same pattern could be useful to you — even somewhere completely different.</p>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <h3>Apartment Search Tracker</h3>
+        <span class="project-meta">Sheet + Apps Script + HTML</span>
+      </div>
+      <p>Built while apartment hunting in Calgary. Every listing — found manually or by Claude — lands in one place instead of scattered across browser tabs and texts to myself.</p>
+      <ul class="points">
+        <li>A kanban board (To Research → Contacted → Tour Scheduled → Applied → Offer) you drag cards across as things progress</li>
+        <li>A map view and a budget-aware color flag on every listing (under budget vs. over)</li>
+        <li>A scheduled task that runs every morning, searches multiple listing sites for new matches, skips anything already in the sheet, and adds verified new finds automatically</li>
+        <li>A per-listing activity log for call notes, tour impressions, and follow-ups, with overdue follow-ups flagged automatically</li>
+      </ul>
+      <p class="small muted"><strong>Useful for you if:</strong> you're ever comparing a lot of options against the same criteria — apartments, job postings, used cars, grad schools. Same pattern: one tracker, one set of filters, an automated scan so you're not re-checking the same five sites by hand every day.</p>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <h3>BIM Coordination Studio</h3>
+        <span class="project-meta">Apps Script + HTML — in daily use at work</span>
+      </div>
+      <p>The most involved thing on this page, and the one closest to my actual job. On a real building project, a dedicated clash-detection platform (Revizto, in my case) already finds every place two disciplines' models collide in 3D — a structural beam through a duct, a sprinkler line through a light fixture. What it doesn't manage is the <em>human</em> side: who owns each clash, what gets decided live versus over email, and whether anything's quietly gone stale. This dashboard is a managerial layer that sits on top of the clash engine — it never touches the 3D geometry, only the workflow around it.</p>
+      <ul class="points">
+        <li>A five-card live overview — Active, In Progress, Resolved, Accepted, Total — read straight off a pasted export from the clash engine</li>
+        <li>An issue register grouped by tag or priority, with a deep link back to each issue's real record</li>
+        <li>"Meeting Mode" — during the actual coordination meeting, walk through a group of related issues and bulk-decide them live on screen, instead of typing up minutes from memory afterward</li>
+        <li>Auto-generated pre-meeting briefs and post-meeting action items, both one-click printable PDFs sent to every discipline lead</li>
+        <li>Sprint-over-sprint trend tracking, with a backfill mode that can replay older exports to reconstruct history retroactively</li>
+      </ul>
+      <p class="small muted"><strong>Useful for you if:</strong> several people each own a slice of the same project and currently track open issues over email or marked-up PDFs. Swap "structural vs. mechanical" for whatever your own disciplines are — it's the same idea: one shared issue list instead of five separate inboxes, and a clean line between "the tool that finds problems" and "the system that makes sure they actually get resolved." The general pattern behind turning a written process like this into working software is walked through on the <a href="pipelines.html">Pipelines page</a>.</p>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <h3>Meal Prep App</h3>
+        <span class="project-meta">Apps Script + HTML + Gemini Live</span>
+      </div>
+      <p>Stores recipes in a structured format that separates "what I cook in bulk and freeze" from "what I do on the day I actually eat it" — including branching options (microwave vs. oven-finish) and side dishes timed against the main steps.</p>
+      <p class="small muted"><strong>Useful for you if:</strong> you ever need to turn talking through something out loud into a clean written record, rather than typing it up later from memory — a site walk, a punch list, an inspection note, a verbal handoff to a contractor. The mechanic is identical to the recipe case; only the vocabulary changes.</p>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <h3>Family Project Dashboard</h3>
+        <span class="project-meta">Apps Script + HTML</span>
+      </div>
+      <p>A shared dashboard for tracking a family home project end to end — task checklist, budget categories, and timeline in one view, so everyone involved is looking at the same source of truth instead of separate group chats. (No real figures shown here — it's a household tool, not something built for outside eyes.)</p>
+      <p class="small muted"><strong>Useful for you if:</strong> you're splitting a project with a few other people — a renovation, a trip, a group gift — and currently tracking it across three group chats and someone's notes app. One shared view kills most of the "wait, did we already pay for that?" messages.</p>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <h3>World Cup 2026 Predictor</h3>
+        <span class="project-meta">Progressive Web App</span>
+      </div>
+      <p>The fun one. A predictor app for guessing World Cup match outcomes with friends — installable on a phone like a real app (a PWA), with no app store involved.</p>
+      <p class="small muted"><strong>Useful for you if:</strong> nothing practical, honestly — this one's the reminder that not everything here has to be a productivity tool. Sometimes it's just a fun thing built for a group chat.</p>
+    </div>
+
+    <div class="project">
+      <div class="project-head">
+        <h3>Daily AI + AEC Brief</h3>
+        <span class="project-meta">Scheduled task · Live artifact · Runs at 6:30 AM daily</span>
+      </div>
+      <p>This one's a different shape from the others — no Google Sheet, no web app URL. Instead: a scheduled task fires every morning at 6:30am, searches the web for the latest AI and AEC (Architecture, Engineering, Construction) news, and drops a structured brief into a live Cowork artifact before I've opened my laptop. The artifact keeps a 14-day rolling archive, and there's a "Run now" button for when something breaks mid-day and I don't want to wait until tomorrow.</p>
+      <ul class="points">
+        <li>Track 1 — AI &amp; Tech: general AI developments that could affect how professionals work (new models, tools, policy, research)</li>
+        <li>Track 2 — AEC-specific: AI being used in architecture, engineering, construction, and BIM — firm pilots, software updates, papers, industry announcements</li>
+        <li>Each item: headline · short analysis · "why it matters for AEC" · source link</li>
+        <li>14-day rolling archive, auto-pruned — no inbox, no newsletter, no manual curation</li>
+      </ul>
+      <p class="small muted"><strong>Useful for you if:</strong> you work in a field that's moving fast and want to stay curre

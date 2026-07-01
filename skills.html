@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skills Library — Inside My AI Workflow</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="theme-skills">
+
+<div class="hairline"></div>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="mark">AI</span> Inside My AI Workflow</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="dashboards.html">Dashboards</a>
+      <a href="work-tracker-guide.html">Work Tracker</a>
+      <a href="second-mind.html">The Second Mind</a>
+      <a href="pipelines.html">Pipelines</a>
+      <a href="skills.html" class="active">Skills</a>
+      <a href="glossary.html">Glossary</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <span class="eyebrow">Custom Modules</span>
+    <h1>The Skills Library</h1>
+    <p class="lead">A "skill" is a small instruction file that teaches Claude how to do one specific job well. Instead of writing custom prompts from scratch, you can download these files and install them directly in your workspace.</p>
+  </div>
+</header>
+
+<section class="tight">
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">Quick Setup</span>
+      <h2>How to install a skill file</h2>
+      <p>Follow these steps to register a downloaded skill file in your Claude Code or Cowork terminal session:</p>
+    </div>
+    
+    <ol class="steps" style="margin-top: 18px;">
+      <li>
+        <strong>Download the skill file</strong>
+        <p>Click any card's download button below to download the corresponding <code>.skill</code> file to your computer.</p>
+      </li>
+      <li>
+        <strong>Attach it to your chat</strong>
+        <p>Drag and drop the downloaded file into your active Claude Code or Cowork session, or use the paperclip attachment icon to upload it.</p>
+      </li>
+      <li>
+        <strong>Tell Claude to install it</strong>
+        <p>Type <em>"install this skill"</em> in the chat. Claude will process the file contents and show a preview card with a <strong>Save skill</strong> button.</p>
+      </li>
+      <li>
+        <strong>Save and complete</strong>
+        <p>Click the <strong>Save</strong> button on the card. The skill is now saved to your shared config file and will be available in all future sessions automatically!</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">Files for your friend</span>
+      <h2>Available Skills for Download</h2>
+      <p>I have packaged three of my most frequently used skills so you can copy and adapt them directly for your own vault tasks:</p>
+    </div>
+
+    <div class="callout useful" style="display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 28px;">
+      <div>
+        <span class="callout-label">Bulk Download</span>
+        <p style="margin: 0; font-size: 0.96rem;"><strong>Download the entire Skills Package (.zip):</strong> Contains all three skill files below (Polish, Session Mode, and Writing Squad) in a single compressed folder.</p>
+      </div>
+      <a href="assets/skills/Skills-For-Friend.zip" download class="btn-download" style="width: auto; min-width: 220px; margin: 0;">
+        <span class="icon">📦</span> Download All Skills (.zip)
+      </a>
+    </div>
+
+    <div class="skills-grid">
+      <!-- Card 1: Polish -->
+      <div class="skill-card">
+        <div>
+          <h3>Polish</h3>
+          <span class="skill-trigger">Trigger: "run polish" or "polish this"</span>
+          <p class="skill-desc">Apply writing rules to any text. Translates bullet-heavy explanations into flowing prose, filters out filler phrases, checks and validates citations, and formats Obsidian tags and internal links cleanly. Includes inline flags like <code>[NEEDS-SOURCE]</code> or <code>[UNCONFIRMED]</code> if verification is incomplete.</p>
+          <div class="skill-tags">
+            <span class="tag accent">Writing</span>
+            <span class="tag amber">Formatting</span>
+            <span class="tag rose">Citations</span>
+          </div>
+        </div>
+        <a href="assets/skills/polish.skill" download class="btn-download">
+          <span class="icon">💾</span> Download polish.skill
+        </a>
+      </div>
+
+      <!-- Card 2: Session Mode -->
+      <div class="skill-card">
+        <div>
+          <h3>Session Mode</h3>
+          <span class="skill-trigger">Trigger: "ARE", "BIM", "Work", or "Finance"</span>
+          <p class="skill-desc">Set your workspace session mode dynamically. Tells Claude exactly which folder context files to load, what level of scrutiny to apply (e.g. strict citations for Study vs casual drafts for Personal), and switches Claude's tone. Customize the mode list inside the file to fit your own projects.</p>
+          <div class="skill-tags">
+            <span class="tag blue">Context</span>
+            <span class="tag amber">Workspace</span>
+            <span class="tag accent">Routines</span>
+          </div>
+        </div>
+        <a href="assets/skills/session-mode.skill" download class="btn-download">
+          <span class="icon">💾</span> Download session-mode.skill
+        </a>
+      </div>
+
+      <!-- Card 3: Writing Squad -->
+      <div class="skill-card">
+        <div>
+          <h3>Writing Squad</h3>
+          <span class="skill-trigger">Trigger: "run writing squad"</span>
+          <p class="skill-desc">A heavy multi-agent review pipeline for official reference materials or notes ready to be promoted to your trusted vault. Runs three sequential passes: flow/prose conversion, technical accuracy check (validates and labels fact vs opinion), and formatting/frontmatter syntax checks. Appends a complete Squad Report.</p>
+          <div class="skill-tags">
+            <span class="tag rose">Review</span>
+            <span class="tag blue">Multi-Pass</span>
+            <span class="tag accent">Quality Gate</span>
+          </div>
+        </div>
+        <a href="assets/skills/writing-squad.skill" download class="btn-download">
+          <span class="icon">💾</span> Download writing-squad.skill
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">Behind the scenes</span>
+      <h2>What is inside a skill file?</h2>
+      <p>Understanding the structure of a skill file makes it easy to edit it to suit your own needs:</p>
+    </div>
+    
+    <p>A skill file is a standard ZIP archive (renamed to the <code>.skill</code> extension) containing a single <code>SKILL.md</code> Markdown file. Claude Code and Cowork unpack this archive to register the skill. The markdown file uses YAML frontmatter to declare its triggers, and structured rules to define the agent's task:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>File Section</th>
+            <th>Purpose & Customization</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>YAML Frontmatter (lines 1-4)</strong></td>
+            <td>Defines the skill's name and description. Triggers are automatically derived from the name and description. You can edit this metadata to change the trigger phrase.</td>
+          </tr>
+          <tr>
+            <td><strong>Instructions / Markdown Body</strong></td>
+            <td>Contains the precise guidelines, checklists, and agent roles. You can unzip the skill, modify the markdown rules (e.g. adding your own specific spelling preferences or citation formats), and zip it back up to customize it.</td>
+          </tr>
+          <tr>
+            <td><strong>Output Format Spec</strong></td>
+            <td>Tells the AI exactly how to output the results (e.g. clean polished text followed by a checklist of flags or reports). Keeping this section clean ensures Claude outputs the results in a predictable way.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout useful">
+      <span class="callout-label">Making Your Own Skills</span>
+      <p>Once you get used to using these skills, you can make your own! Whenever you find yourself typing a repetitive series of prompts in your chat, ask Claude: <em>"Turn what we just did into a reusable skill file named my-skill.skill."</em> Claude will package the instructions and output a downloadable skill file you can install locally or share with others.</p>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="page-nav">
+    <a href="pipelines.html"><span class="dir">← Back</span>Pipelines</a>
+    <a href="glossary.html" class="next"><span class="dir">Next</span>Glossary →</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <span>Written and built by Shadi, with Claude doing most of the typing.</span>
+    <span>Last updated June 2026</span>
+  </div>
+</footer>
+
+<script src="assets/script.js"></script>
+</body>
+</html>
