@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Setup Guide — Inside My AI Workflow</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="theme-connect">
+
+<div class="hairline"></div>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="mark">AI</span> Inside My AI Workflow</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="dashboards.html">Dashboards</a>
+      <a href="work-tracker-guide.html">Work Tracker</a>
+      <a href="second-mind.html">The Second Mind</a>
+      <a href="pipelines.html">Pipelines</a>
+      <a href="skills.html">Skills</a>
+      <a href="glossary.html">Glossary</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <span class="eyebrow">Getting started</span>
+    <h1>Setup Guide</h1>
+    <p class="lead">How to wire a vault to an AI — the operation that made me possible, now performed on yours. It's simpler than it sounds: a vault is just a folder of text files. No API, no plugin, no server on day one. Mostly clicking.</p>
+  </div>
+</header>
+
+<section class="tight">
+  <div class="container">
+    <div class="callout why">
+      <span class="callout-label">The key insight</span>
+      <p>Here's the secret that makes this whole page anticlimactic: Obsidian stores everything as plain <code>.md</code> files in a regular folder. No database, no cloud, no proprietary format guarding the door. So Claude — running locally through Cowork — can read and write your vault the same way it reads any file on your machine. No plugin. No API. You point Cowork at a folder, and the folder is the integration.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">The simple path</span>
+      <h2>Direct folder access — the daily driver</h2>
+      <p>The method actually used day to day, and the one I'd point you to first: Claude reads and writes your vault files directly. No plugin, nothing to configure in Obsidian, nothing to break later at the worst possible moment.</p>
+    </div>
+
+    <ol class="steps" style="margin-top: 18px;">
+      <li>
+        <strong>Install Claude Cowork (or Claude Code)</strong>
+        <p>Download and install <strong>Claude Cowork</strong> from the Anthropic website, or use <strong>Claude Code</strong> if you're comfortable with a terminal. Either gives Claude the ability to read and write files on your local machine — something the browser-based Claude.ai chat cannot do.</p>
+      </li>
+      <li>
+        <strong>Open your vault folder in Cowork</strong>
+        <p>When you start a new Cowork project, you'll be asked to select a folder. Choose your Obsidian vault folder — the one Obsidian opens when you launch it. That's all. Claude now has direct access to every note in the vault.</p>
+      </li>
+      <li>
+        <strong>Tell Claude what's in there</strong>
+        <p>In your first session, give Claude a quick orientation. Tell it the folder structure you use, which folders are drafts vs. trusted, and anything else it should know. Then ask it to save that as a file called <code>CLAUDE.md</code> at the root of your vault — Claude will read this automatically at the start of every future session.</p>
+        <div class="callout note" style="margin-top: 16px;">
+          <span class="callout-label">Shortcut</span>
+          <p>Don't want to write the orientation yourself? Paste this into your first session and let Claude interview you instead:</p>
+          <div class="code-block" style="margin-top: 10px;">Interview me — ask what you need to know about who I am, what I'm working on, and how I like to work. Once done, save the result as CLAUDE.md at the root of my vault.</div>
+        </div>
+      </li>
+      <li>
+        <strong>Verify it's working</strong>
+        <p>Ask Claude: <em>"List the files in my vault"</em> or <em>"What's in my Drafts folder?"</em> If it returns real file names from your vault, you're connected. From here, you can ask Claude to read notes, write new ones, search across your vault, or update existing files — all in plain conversation.</p>
+      </li>
+    </ol>
+
+    <div class="callout why">
+      <span class="callout-label">Why this beats the API for most people</span>
+      <p>The REST API route (below) works — Shadi tested it, I supervised — but it costs you a plugin, an open port, and a token to babysit. For reading and writing notes, direct folder access does the same job with none of the accessories. Add the API later, when you want smarter search across the vault. Day one deserves the easy win.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">Optional upgrade</span>
+      <h2>The REST API plugin — when to add it</h2>
+      <p>The optional upgrade. It gives Claude a more structured way into your vault — search by tag, query properties, walk the graph. Worth adding once the basics feel boring, which is the correct time to add anything. Not a day-one requirement, no matter how capable it sounds.</p>
+    </div>
+
+    <ol class="steps" style="margin-top: 18px;">
+      <li>
+        <strong>Install the plugin</strong>
+        <p>In Obsidian: <strong>Settings</strong> → <strong>Community Plugins</strong> → <strong>Browse</strong> → search for <strong>"Local REST API with MCP"</strong> (by Adam Coddington) → install and enable it. The plugin runs a small local server on your machine. It does not send anything outside your computer.</p>
+      </li>
+      <li>
+        <strong>Copy your connection details</strong>
+        <p>Open the plugin settings in Obsidian. You'll find an auto-generated configuration block pre-filled with your port and authorization token:</p>
+        <div class="code-block">{
+  "mcpServers": {
+    "obsidian": {
+      "type": "http",
+      "url": "https://127.0.0.1:27124/mcp/",
+      "headers": {
+        "Authorization": "Bearer your-api-key-here"
+      }
+    }
+  }
+}</div>
+        <p>Copy this block directly from the plugin page. Don't hand-type your token.</p>
+      </li>
+      <li>
+        <strong>Register the connection</strong>
+        <p>Paste the copied JSON into a Cowork or Claude Code session and say: <em>"Register this MCP connection for me."</em> Claude will configure it and confirm. Restart your session, then test with: <em>"Search my vault for notes tagged #decision."</em></p>
+      </li>
+    </ol>
+
+    <div class="callout note">
+      <span class="callout-label">Two vaults?</span>
+      <p>Running the two-room memory from the <a href="second-mind.html">Second Mind page</a>? Install the plugin in both vaults and give the second one port <code>27125</code> so they don't fight over the same door. Register the connections under different names — <code>obsidian-ops</code> and <code>obsidian-main</code> — and from then on Claude walks between both rooms in a single session. The wall stays; Claude just gets a key to each side.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">Try it</span>
+      <h2>First prompts to run once you're connected</h2>
+    </div>
+
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="tag-row"><span class="tag blue">Explore</span></div>
+        <h3>Browse your vault</h3>
+        <p>"List the contents of my Drafts folder and tell me what's in there."</p>
+      </div>
+      <div class="card">
+        <div class="tag-row"><span class="tag accent">Draft</span></div>
+        <h3>Write a note</h3>
+        <p>"Create a new note in Drafts/ about [topic] with my standard YAML frontmatter."</p>
+      </div>
+      <div class="card">
+        <div class="tag-row"><span class="tag rose">Quality check</span></div>
+        <h3>Review a draft</h3>
+        <p>"Read my draft note on [topic] and check it against my sourcing rules before I promote it."</p>
+      </div>
+      <div class="card">
+        <div class="tag-row"><span class="tag amber">Promote</span></div>
+        <h3>Move to trusted</h3>
+        <p>"This note has been verified against [source] — move it from Drafts to the Main Vault and update its frontmatter to reflect that."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="page-nav">
+    <a href="second-mind.html"><span class="dir">← Back</span>The Second Mind</a>
+    <a href="pipelines.html" class="next"><span class="dir">Next</span>Pipelines →</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <span>Written and built by Shadi, with Claude doing most of the typing.</span>
+    <span>Last updated July 2026</span>
+  </div>
+</footer>
+
+<script src="assets/script.js"></script>
+<script>
+window.NARRATOR={page:'connect',
+  lines:["So you want to wire a vault to an AI.",
+    "Good news: it's plugins and a folder path, not a computer science degree. Ten minutes. I timed it. I time everything.",
+    "Follow the steps in order — the order is the trick."],
+  revisit:"Back at the setup guide. Second attempts have a 100% success rate. I made that up, but it's motivating.",
+  idle:"Stuck on a step? Read it out loud. Works disturbingly often.",
+  scrollLine:"Step one is right below. It's mostly clicking.",
+  poke:"That's an instruction. It responds better to being followed.",
+  blur:"Left mid-setup. The vault will wait. Vaults are good at that. Anyway—",
+  asides:[
+    {h:'Direct folder access', t:"This section is the entire operation. Everything after it is reassurance."},
+    {h:'The REST API plugin', t:"Optional. Like dessert, but with ports."},
+    {h:'First prompts', t:"Read the first one out loud if you like. The vault won't judge. I might, gently."}
+  ]};
+</script>
+<script src="assets/narrator.js"></script>
+</body>
+</html>

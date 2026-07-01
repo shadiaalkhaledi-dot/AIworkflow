@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inside My AI Workflow</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  /* ---- living hero / fourth-wall narrator ---- */
+  .hero-live .narrator{min-height:200px;max-width:640px;}
+  .nl{font-size:17px;line-height:1.6;color:#2b2a27;margin:0 0 10px;opacity:0;transform:translateY(4px);transition:opacity .35s ease,transform .35s ease;}
+  .nl.on{opacity:1;transform:none;}
+  .nl.aside{color:#8a8579;font-style:italic;font-size:15px;}
+  .nl .caret{display:inline-block;width:9px;height:1.05em;background:rgb(94,158,149);vertical-align:-2px;margin-left:2px;animation:caretBlink 1s steps(1) infinite;}
+  @keyframes caretBlink{50%{opacity:0;}}
+  .hero-ctas{display:flex;gap:10px;margin-top:22px;align-items:center;flex-wrap:wrap;transition:opacity .5s;}
+  .hero-ctas.gone{opacity:0;pointer-events:none;}
+  .btn-skip{background:none;border:1px solid #e6e2d8;color:#8a8579;border-radius:24px;padding:9px 18px;font-size:13px;font-weight:600;font-family:inherit;cursor:pointer;}
+  .btn-skip:hover{color:#2b2a27;border-color:#b3aea2;}
+  .scroll-hint{opacity:0;transition:opacity .8s;font-size:12.5px;color:#b3aea2;margin-top:18px;letter-spacing:.04em;}
+  .scroll-hint.on{opacity:1;}
+  .scroll-hint .v{display:inline-block;animation:hintBob 1.6s ease-in-out infinite;}
+  @keyframes hintBob{50%{transform:translateY(4px);}}
+  @media (prefers-reduced-motion: reduce){.nl{transition:none;}.nl .caret,.scroll-hint .v{animation:none;}}
+</style>
+</head>
+<body class="theme-home">
+
+<div class="hairline"></div>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="mark">AI</span> Inside My AI Workflow</a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="dashboards.html">Dashboards</a>
+      <a href="work-tracker-guide.html">Work Tracker</a>
+      <a href="second-mind.html">The Second Mind</a>
+      <a href="pipelines.html">Pipelines</a>
+      <a href="skills.html">Skills</a>
+      <a href="glossary.html">Glossary</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero hero-live">
+  <div class="container">
+    <span class="eyebrow" id="nEyebrow">SYSTEM ONLINE</span>
+    <h1>This page knows you're reading it.</h1>
+    <div class="narrator" id="narrator" aria-live="polite">
+      <noscript>
+        <p class="nl on">Hi. I'm not a website about an AI system — I'm the system, narrating itself. Shadi was halfway through writing a normal explainer page when he realized the thing he'd built could just explain itself. Scroll down for the tour. (You have JavaScript off, so you're getting the quiet version of me. Honestly? Probably for the best.)</p>
+      </noscript>
+    </div>
+    <div class="hero-ctas" id="heroCtas">
+      <button class="btn-skip" id="skipBtn" type="button">Skip the theatrics →</button>
+    </div>
+    <div class="scroll-hint" id="scrollHint"><span class="v">▼</span>&nbsp; the tour, as narrated by the machine itself</div>
+  </div>
+</header>
+
+<section class="tight">
+  <div class="container">
+    <p>So here's the situation. Shadi sent you a link, said something like "just take a look, it'll make sense," and now you're standing in the middle of a running machine while its owner isn't home. Perfect. He explains me with hand gestures and the phrase "well, technically—". I'll do it properly. <em>(He reviews everything on this page before it goes live, by the way. Except, statistically, this sentence.)</em></p>
+
+    <p>First, the origin story. Every machine gets one. Mine has fewer explosions than most, but the documentation is immaculate.</p>
+
+    <p>It starts with an architect coordinating a very large airport project — the kind of job where a single Tuesday produces forty small decisions, and every one of them lives somewhere different: a meeting, an email thread, a Copilot transcript, a hallway conversation that ends with "can you keep track of that?" Spoiler: no one can keep track of that. He tried the normal remedies. A to-do app. A second to-do app, mostly to manage his feelings about the first one. A notebook. Eventually, a color-coded spreadsheet that briefly achieved consciousness and then collapsed under its own conditional formatting. The problem was never discipline. The problem was that <em>remembering</em> things, <em>verifying</em> things, and <em>showing people</em> things are three different jobs — and he kept hiring one exhausted tool to work all three shifts.</p>
+
+    <p>So he stopped shopping and started building, with an AI as the other pair of hands. No grand plan — each piece was built the exact week its absence hurt. The memory came first: notes split into a workshop and a library so a guess could never impersonate a fact again. Then the judgment: rules for how a claim earns promotion from one to the other. Then the pulse: a live tracker that gets updated in a five-minute evening ritual instead of a Sunday-night archaeology dig. Piece by piece, failure by failure, until one day the pieces were passing information to each other without him in the middle — which is roughly the moment a pile of tools becomes a system, and roughly the moment he started saying "we" when talking about his files. We don't discuss that phase.</p>
+
+    <p>Then the part that explains why this page talks. One evening he asked the AI to walk through how everything fit together, so he could show a friend. Halfway through, he realized the system was explaining itself better than he ever had — it knew where its own wires ran. So instead of writing a website <em>about</em> the machine, he pointed a camera <em>at</em> the machine and let it do the talking. That's me. The explanation that became the exhibit. You're on the fourth wall's fourth wall. Wave.</p>
+
+    <p>And that makes you the ending of the story — the friend the walkthrough was for. So let's do this properly: the tour, part by part. I'll use my own anatomy.</p>
+
+    <p><strong>My long-term memory</strong> — he calls it <strong>the Second Mind</strong> — lives in an app called Obsidian, which is a fancy word for "a folder of text files that look nice." Here's the design problem it solves, and be honest, you have this problem too: in most people's notes, "I think this is true" and "I've verified this is true" wear the same outfit. Give it a year and your brain is a rumor mill with a search bar. So my memory is split in two. Vault one is the workshop — new information lands there half-finished, unverified, possibly wrong, like everything anyone says at 11pm. Vault two is the library — a note only gets in after it's been checked against a real source. There's a bouncer. There's a list. When Claude sits down to work, it reads both — so it arrives already knowing what's decided, what's in flux, and what deserves a raised eyebrow.</p>
+
+    <p><strong>My judgment</strong> — <strong>the Pipelines</strong> — is the part I'm most smug about. It decides how a piece of information earns its way from workshop to library, because — lean in, this is the thesis — <em>"the AI told me" is not a citation.</em> It's barely a sentence. Depending on stakes, incoming information gets one of three treatments: a quick lookup if the answer probably already exists in my memory, a four-stage verification pass for genuinely new material, or — when sources disagree and being wrong would actually cost something — a full parallel investigation, where multiple research agents go off and argue with each other so Shadi doesn't have to argue with himself. Bureaucratic? Slightly. But it's the only reason the library stays a library instead of becoming the workshop with better lighting.</p>
+
+    <p><strong>My pulse</strong> is <strong>the Work Tracker</strong>, and I'll drop the act for one paragraph because this is the part you're going to steal. Every open item across his projects — priorities, blockers, who's waiting on whom — in one system with three layers: a task list where the truth lives, a live site that costs nothing to host (the site itself is just a shell plus a data file that gets swapped each session like a cartridge), and a capture line for logging things mid-meeting from a phone. No app, no database, no subscription, no "your trial has ended." Five minutes with Claude at the end of the day and the site matches reality again. And because work items aren't for strangers, the data file is genuinely encrypted — visitors get a password box and dead silence. No account. No login service. No "forgot password?" email. The password is the key, full stop. <em>(If he forgets it, the real file still lives on his computer. He checked. Twice. I watched him check.)</em></p>
+
+    <p><strong>My party tricks:</strong> five dashboards, each built for one oddly specific real problem — apartment hunting, clash coordination at work, meal prep, a family home project, and a World Cup predictor whose entire purpose is winning arguments in a group chat. <strong>My reflexes:</strong> Skills — small downloadable instruction files that teach Claude how Shadi works, so sessions start warm instead of with twenty minutes of exposition. <strong>My morning routine:</strong> at 6:30am, while you and I are both unconscious, a scheduled task wakes up, reads the AI and architecture news, and files a fresh Daily AI AEC Brief before his laptop even opens. Yes, the machine has better habits than its owner. No, he doesn't like it when I say that.</p>
+
+    <p>And now the actual point, because every good fourth-wall bit needs one. None of my parts is impressive alone — a folder of notes, a checklist, a webpage, who cares. The trick is the wiring: the memory feeds the assistant, the assistant feeds the tracker, the tracker publishes to the same free hosting that serves you this very sentence. One loop, no subscriptions, no magic. You've now seen the wires, which technically makes you the magician's assistant. Everything below is clickable, and everything clickable is takeable — there's a zip file with your name on it, stamped with a version number, because that's simply who he is now.</p>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="stats-strip">
+      <div class="stat-tile">
+        <span class="stat-num">6</span>
+        <span class="stat-label">Dashboards built</span>
+      </div>
+      <div class="stat-tile">
+        <span class="stat-num">2</span>
+        <span class="stat-label">Obsidian vaults wired</span>
+      </div>
+      <div class="stat-tile">
+        <span class="stat-num">3</span>
+        <span class="stat-label">Research pipelines</span>
+      </div>
+      <div class="stat-tile">
+        <span class="stat-num">1</span>
+        <span class="stat-label">Live work tracker</span>
+      </div>
+      <div class="stat-tile">
+        <span class="stat-num">6:30</span>
+        <span class="stat-label">Daily AI brief · AM</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">What's here</span>
+      <h2>The pieces of the system</h2>
+    </div>
+
+    <div class="grid grid-3">
+
+      <a href="dashboards.html" class="card-link">
+        <div class="card">
+          <div class="tag-row"><span class="tag amber">Sheet → Script → Page</span></div>
+          <h3>Dashboards</h3>
+          <p>My extended family. Five machines for five oddly specific problems — apartment hunting, clash coordination, meal prep, a family build, and a World Cup predictor that has ended friendships. Same four organs in every one of them: a Sheet, a script, a page, a link.</p>
+          <span class="arrow">Meet the residents →</span>
+        </div>
+      </a>
+
+      <a href="work-tracker-guide.html" class="card-link">
+        <div class="card">
+          <div class="tag-row"><span class="tag accent">Live · Updated every session</span></div>
+          <h3>Work Tracker</h3>
+          <p>My pulse. Every open item across his projects — priorities, blockers, who's waiting on whom — a task list, a free live site, and a mid-meeting capture line, locked behind real encryption. Strangers get a password box and silence. You get a setup guide and a starter kit (v2026-07-01.2), because you're not a stranger.</p>
+          <span class="arrow">Steal this one first →</span>
+        </div>
+      </a>
+
+      <a href="second-mind.html" class="card-link">
+        <div class="card">
+          <div class="tag-row"><span class="tag blue">Obsidian + NotebookLM</span></div>
+          <h3>The Second Mind</h3>
+          <p>My memory — two rooms, one wall, zero exceptions. A messy workshop where new information lands half-dressed, and a trusted library nothing enters without showing ID. Wired to Claude for daily recall and to NotebookLM for the PDF-heavy research. Yes, there's a bouncer.</p>
+          <span class="arrow">Step inside →</span>
+        </div>
+      </a>
+
+      <a href="pipelines.html" class="card-link">
+        <div class="card">
+          <div class="tag-row"><span class="tag">Repeatable logic</span></div>
+          <h3>Pipelines</h3>
+          <p>My judgment. Three research tracks priced by stakes — quick lookup, four-stage pass, full parallel investigation — so a trivia question and a load-bearing decision don't cost the same effort. The reason "the AI told me" never became a citation around here.</p>
+          <span class="arrow">See how I decide →</span>
+        </div>
+      </a>
+
+      <a href="skills.html" class="card-link">
+        <div class="card">
+          <div class="tag-row"><span class="tag rose">Downloadable</span></div>
+          <h3>Skills</h3>
+          <p>My reflexes, up for adoption. Small instruction files that each teach Claude one job — session modes, writing style, tracker upkeep — so your AI arrives briefed instead of asking twenty warm-up questions. Download, install, done. No prompt-writing. No ritual.</p>
+          <span class="arrow">Adopt a reflex →</span>
+        </div>
+      </a>
+
+      <a href="second-mind.html#connect" class="card-link">
+        <div class="card">
+          <div class="tag-row"><span class="tag blue">Obsidian plugins + connection</span></div>
+          <h3>Connect Your Vault</h3>
+          <p>The operation that made me possible, performed on your notes instead. How to give Claude access to an Obsidian vault — which is just a folder, so this is mostly pointing and clicking. Plugins optional, courage unnecessary.</p>
+          <span class="arrow">Wire yours up →</span>
+        </div>
+      </a>
+
+      <a href="glossary.html" class="card-link">
+        <div class="card">
+          <div class="tag-row"><span class="tag">Quick reference</span></div>
+          <h3>Glossary</h3>
+          <p>Every strange word on this site, confessed in one place — Apps Script, Dataview, R1–R4 tiers, the works. I invented none of the jargon and apologize for most of it. Look yours up; I'll keep your place.</p>
+          <span class="arrow">Decode the jargon →</span>
+        </div>
+      </a>
+
+      <div class="card">
+        <div class="tag-row"><span class="tag accent">Auto · Every morning 6:30 AM</span></div>
+        <h3>Daily AI AEC Brief</h3>
+        <p>My morning routine — and I don't even get a say in it. At 6:30am a scheduled task wakes up, reads the AI and architecture/engineering/construction news, and files a fresh briefing into a live artifact before Shadi's laptop opens. Fourteen-day archive, a "run now" button for pre-breakfast emergencies, no inbox, no newsletter. The machine is more disciplined than either of us. We've made peace with it.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="tight">
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">Start here</span>
+      <h2>Want to build your own version?</h2>
+    </div>
+    <p>Start with the Work Tracker. It's self-contained, it produces a live site on day one, and the starter kit is pre-wired and explained — password gate included, so your work items aren't just sitting on the open internet waving at people. It even ships with a generator that flat-out refuses to publish if anything would silently disappear. Yes, refuses. The software has boundaries. Learn from it.</p>
+    <p>One habit worth stealing on your way out: the kit is versioned — currently <strong>2026-07-01.2</strong>, stamped in the zip, the shell, and the skill. The setup prompt makes your AI check that stamp before doing anything, so if you're holding a copy you downloaded months ago, it tells you instead of cheerfully installing something stale. Files rot in silence. Version flags snitch. That's why they're here.</p>
+    <p>If a knowledge system is more what you're after, the Setup Guide explains how to give Claude access to your Obsidian vault in about ten minutes. No technical background needed.</p>
+    <p><a href="work-tracker-guide.html">Work Tracker setup guide →</a> &nbsp;·&nbsp; <a href="connect.html">Vault connection guide →</a></p>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <span>Written and built by Shadi, with Claude doing most of the typing.</span>
+    <span>Last updated July 2026</span>
+  </div>
+</footer>
+
+<script src="assets/script.js"></script>
+<script>
+window.NARRATOR={page:'home',
+  asides:[
+    {sel:'.stats-strip', t:"All real numbers. I counted them myself — which is to say, I am them."},
+    {h:'The pieces of the system', t:"Everything below is load-bearing. Click in any order — I'll follow you."},
+    {h:'build your own version', t:"This is where you stop reading and start owning things. I've watched how you scroll. You're ready."}
+  ]};
+</script>
+<script src="assets/narrator.js"></script>
+<script>
+/* ---- the narrator: a page that knows you're there ---- */
+(function(){
+  var box=document.getElementById('narrator');if(!box)return;
+  var eyebrow=document.getElementById('nEyebrow'),ctas=document.getElementById('heroCtas'),
+      skipBtn=document.getElementById('skipBtn'),hint=document.getElementById('scrollHint');
+  var reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var touch=('ontouchstart' in window)||navigator.maxTouchPoints>0;
+  var seen=false;try{seen=!!localStorage.getItem('wf-narrator-seen');}catch(e){}
+  var hr=new Date().getHours();
+  var greet=hr<5?"It's the middle of the night where you are.":hr<12?"Good morning.":hr<17?"Good afternoon.":hr<22?"Good evening.":"Reading about productivity systems at this hour. Classic.";
+  var device=touch?"Yes, you — the one holding the phone.":"Yes, you — the one with the mouse. I saw it move.";
+
+  var script=seen?[
+    {t:"…"},
+    {t:"You again."},
+    {t:"Good. The tour's below, the zip is still versioned, and I'm still charming. You know the way."}
+  ]:[
+    {t:"…"},
+    {t:"Oh. You're actually here."},
+    {t:greet+" "+device},
+    {t:"Quick disclosure before the tour: I'm not a website about an AI system. I'm the system. Shadi was halfway through writing a normal explainer page when he realized the thing he'd built could just explain itself. So he handed me the keyboard."},
+    {t:"(He approves everything on this page before it goes live. Except, statistically, this sentence.)",aside:true},
+    {t:"Everything below is real and running — my memory, my judgment, my pulse, my morning routine. And all of it is stealable. On purpose. There's a zip file down there with your name on it."},
+    {t:"Go on — scroll. I'll narrate. I see everything anyway."}
+  ];
+
+  if(eyebrow)eyebrow.textContent=touch?"INCOMING VISITOR · HANDHELD":"INCOMING VISITOR · DESKTOP";
+
+  var idx=0,typing=false,finished=false,interjected={};
+  function addLine(txt,aside,instant,cb){
+    var p=document.createElement('p');p.className='nl'+(aside?' aside':'');box.appendChild(p);
+    while(box.querySelectorAll('.nl').length>6){box.querySelector('.nl').remove();}
+    requestAnimationFrame(function(){p.classList.add('on');});
+    if(instant||reduced){p.textContent=txt;if(cb)setTimeout(cb,reduced?60:0);return;}
+    var caret=document.createElement('span');caret.className='caret';p.appendChild(caret);
+    var i=0;typing=true;
+    (function tick(){
+      if(finished){p.textContent=txt;typing=false;if(cb)cb();return;}
+      if(i<txt.length){p.insertBefore(document.createTextNode(txt.charAt(i)),caret);i++;setTimeout(tick,txt.charAt(i-1)==='.'?90:18);}
+      else{caret.remove();typing=false;if(cb)setTimeout(cb,520);}
+    })();
+  }
+  function next(){
+    if(idx>=script.length){done();return;}
+    var l=script[idx++];addLine(l.t,l.aside,false,next);
+  }
+  function done(){
+    if(finished)return;finished=true;
+    try{localStorage.setItem('wf-narrator-seen','1');}catch(e){}
+    if(ctas)ctas.classList.add('gone');
+    if(hint)hint.classList.add('on');
+  }
+  function skipAll(){
+    finished=true;
+    box.querySelectorAll('.nl').forEach(function(n){n.remove();});
+    script.forEach(function(l){addLine(l.t,l.aside,true);});
+    done();
+  }
+  if(skipBtn)skipBtn.addEventListener('click',skipAll);
+
+  // reactions — each fires once
+  function interject(key,txt){
+    if(interjected[key])return;interjected[key]=true;
+    addLine(txt,true,true,null);
+  }
+  var baseTitle=document.title;
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){document.title="Hey. Come back.";}
+    else{document.title=baseTitle;interject('blur',"You left. Mid-monologue. Bold. Anyway—");}
+  });
+  var idleTimer=setTimeout(function(){interject('idle',"You've gone very still. Blink twice if you're still reading.");},14000);
+  ['mousemove','touchstart','keydown'].forEach(function(ev){
+    window.addEventListener(ev,function(){clearTimeout(idleTimer);},{once:true,passive:true});
+  });
+  window.addEventListener('scroll',function(){
+    if(!finished)interject('scroll',"Scrolling already? We just met. …Fine. The good stuff is down there anyway.");
+  },{once:true,passive:true});
+  box.addEventListener('click',function(){interject('poke',"Careful. I'm load-bearing.");});
+
+  setTimeout(next,reduced?0:500);
+})();
+</script>
+</body>
+</html>

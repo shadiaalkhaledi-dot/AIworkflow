@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Second Mind — Inside My AI Workflow</title>
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body class="theme-second-mind">
+
+<div class="hairline"></div>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="mark">AI</span> Inside My AI Workflow</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="dashboards.html">Dashboards</a>
+      <a href="work-tracker-guide.html">Work Tracker</a>
+      <a href="second-mind.html" class="active">The Second Mind</a>
+      <a href="pipelines.html">Pipelines</a>
+      <a href="skills.html">Skills</a>
+      <a href="glossary.html">Glossary</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <span class="eyebrow">Knowledge system</span>
+    <h1>The Second Mind</h1>
+    <p class="lead">You're inside my memory now. Wipe your feet. It's a knowledge base built in Obsidian, wired to a grounded research tool and to Claude — and it exists because human memory has a terrible product flaw: things you learn evaporate after one read, and things you <em>half</em>-learned feel exactly like things you verified. I fix both. It's most of my personality.</p>
+  </div>
+</header>
+
+<section>
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">The big idea</span>
+      <h2>Two vaults: a workshop and a library</h2>
+      <p>My memory has two rooms, and the wall between them is the entire design. Two separate Obsidian vaults — literally two folders — and information does not get to pick which one it lives in. That's decided at the door.</p>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="tag-row"><span class="tag amber">Ops Vault</span></div>
+        <h3>The workshop</h3>
+        <p>Messy on purpose — sawdust everywhere, and proud of it. New information lands here first: half-finished research, AI drafts, things copied from a PDF at speed, ideas that might be flat wrong. Nothing in here is trusted yet, and that's the point — this room is allowed to be wrong so the other one never has to be.</p>
+      </div>
+      <div class="card">
+        <div class="tag-row"><span class="tag accent">Main Vault</span></div>
+        <h3>The library</h3>
+        <p>Quiet, curated, slightly smug. A note only gets shelved here after it's been checked against a real source — no exceptions, no fast passes. This is the room actually relied on day to day: if it's in here, it never needs re-verifying. That sentence is the entire return on investment.</p>
+      </div>
+    </div>
+
+    <div class="callout why">
+      <span class="callout-label">Why bother splitting them</span>
+      <p>Because without the wall, "pretty sure" and "actually verified" share a bed, and within a year you can't tell which is which — congratulations, your knowledge base is now a rumor with a folder structure. Physical separation is the fix. The library stays trustworthy for one reason only: nothing gets in without passing the checkpoint. Not even the notes with great vibes.</p>
+    </div>
+
+    <div class="callout useful">
+      <span class="callout-label">Useful for you, even without Obsidian</span>
+      <p>You can steal the idea without stealing the tooling. Wherever you keep notes — Notion, Apple Notes, a drawer of Google Docs — you already own one big pile where "I think this is true" and "I checked this" are wearing the same outfit. Just keeping a rough inbox separate from a small, deliberately curated "trusted" set solves most of the real problem. The plugins below only automate the moving part. The wall is the invention; the rest is furniture.</p>
+    </div>
+
+    <div class="callout note">
+      <span class="callout-label">The 5 Promotion Rules</span>
+      <p>The bouncer's checklist. Before any draft moves from workshop to library, all five boxes get ticked — no exceptions for notes with good vibes:</p>
+      <ul style="margin-top: 10px; padding-left: 20px;">
+        <li><strong>Evidence exists:</strong> The background context or data files actually exist.</li>
+        <li><strong>Verified:</strong> The assertions are verified against primary references, not just guessed.</li>
+        <li><strong>Reusable:</strong> The information is structured to be useful beyond the current conversation.</li>
+        <li><strong>Correctly tagged:</strong> Saved in the right location with consistent YAML frontmatter.</li>
+        <li><strong>Integrity:</strong> No information was distorted, lost, or hallucinated during the cleanup.</li>
+      </ul>
+    </div>
+
+    <details class="tutorial-details">
+      <summary>How to Split Into Two Vaults When Ready</summary>
+      <div class="details-content">
+        <p>You don't need two vaults on day one. But if you decide to fully separate your messy workshop from your trusted library, follow this sequence:</p>
+        <ol class="steps" style="margin-top: 16px;">
+          <li>
+            <strong>Create the Second Vault</strong>
+            <p>Open Obsidian's vault switcher, choose "Create new vault," and point it to a completely empty folder. This becomes your trusted Main Vault.</p>
+          </li>
+          <li>
+            <strong>Enable Local REST API</strong>
+            <p>Go to Settings → Community Plugins → Browse, find <strong>"Local REST API with MCP"</strong>, install, and enable it in the new vault, just like the first one.</p>
+          </li>
+          <li>
+            <strong>Set the Port (Avoid Collision)</strong>
+            <p>Open the plugin settings in the second vault. By default, it runs on port <code>27124</code>. Change this to <code>27125</code> in the settings so the two vault connections don't collide.</p>
+          </li>
+          <li>
+            <strong>Register with Claude</strong>
+            <p>Copy the registration JSON block shown in the second vault's plugin settings page and ask Claude: <em>"Register this second vault connection as 'trusted-vault' on port 27125."</em> Claude will configure both connections so it can talk to both at the same time.</p>
+          </li>
+        </ol>
+      </div>
+    </details>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">Intentional sessions</span>
+      <h2>Pick a mode before you start</h2>
+      <p>Every session with me starts with one word. Say "ARE" and I load the exam files and get strict about citations. Say "Finance" and I go quiet and precise. It's like a uniform — the AI knows the mission before you've finished your first sentence, instead of guessing from context like an intern on day two.</p>
+    </div>
+
+    <p>One word: no wasted tokens, no guessing, no study notes bleeding into work notes. The current roster:</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Mode Word</th>
+            <th>What it loads & focuses on</th>
+            <th>Color Theme</th>
+            <th>Mood & Tone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ARE</strong></td>
+            <td>Architecture Licensing Exam study tracker & resources</td>
+            <td>Warm Sienna</td>
+            <td>Rigorous, citation-conscious, study-oriented</td>
+          </tr>
+          <tr>
+            <td><strong>BIM</strong></td>
+            <td>Learning model coordination & clash detection role resources</td>
+            <td>Sage Teal</td>
+            <td>Systematic, procedural, technical</td>
+          </tr>
+          <tr>
+            <td><strong>Work</strong></td>
+            <td>Professional day-to-day coordination & project notes</td>
+            <td>Slate Blue</td>
+            <td>Efficient, highly structured, cautious</td>
+          </tr>
+          <tr>
+            <td><strong>Finance</strong></td>
+            <td>Budget sheets & personal investment tracking (encrypted)</td>
+            <td>Muted Gold</td>
+            <td>Private, data-heavy, minimal chatting</td>
+          </tr>
+          <tr>
+            <td><strong>Check-in</strong></td>
+            <td>A cross-cutting status sweep of all outstanding tasks</td>
+            <td>Neutral</td>
+            <td>High-level review, dashboard updates</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <h3>Method 1: Simple Iconizing (No Code)</h3>
+        <p>Install the <strong>Iconize</strong> community plugin in Obsidian. Right-click any mode folder in the sidebar, choose an icon, and pick its color. This is the fastest way to visually index your modes.</p>
+      </div>
+      <div class="card">
+        <h3>Method 2: Custom CSS Snippets</h3>
+        <p>Create a CSS snippet in your vault's <code>.obsidian/snippets/</code> folder. Set custom callout blocks (like <code>>[!exam]</code>) with specific color rules. This colors both the blocks inside your notes and the folder tabs in the sidebar.</p>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <span class="callout-label">The Signal of No Color</span>
+      <p>Check-in mode has no color, and that's not laziness — it's the uniform for not wearing a uniform. Neutral means "surveying everything, executing nothing." When the screen goes plain, you're in the control tower, not the cockpit.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">How a note actually moves</span>
+      <h2>The folder structure is the pipeline</h2>
+      <p>Watch a note earn its promotion. Inside the workshop, the folders themselves are the stages — where a note sits tells you exactly how much to trust it. No tracking spreadsheet, no status column. The address <em>is</em> the status.</p>
+    </div>
+
+    <div class="diagram">
+      <div class="diagram-step">
+        <div class="icon">1</div>
+        <strong>Inbox</strong>
+        <span class="cap">Raw, just captured</span>
+      </div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-step">
+        <div class="icon">2</div>
+        <strong>Candidates</strong>
+        <span class="cap">Looks promising, not checked</span>
+      </div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-step">
+        <div class="icon">3</div>
+        <strong>Verification</strong>
+        <span class="cap">Being checked against a real source</span>
+      </div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-step">
+        <div class="icon">4</div>
+        <strong>Staging</strong>
+        <span class="cap">Passed — waiting to be moved</span>
+      </div>
+      <div class="diagram-arrow">→</div>
+      <div class="diagram-step">
+        <div class="icon">✓</div>
+        <strong>Main Vault</strong>
+        <span class="cap">Promoted. Trusted. Done.</span>
+      </div>
+    </div>
+
+    <p>It's peer review for your own thoughts — draft, review, revision, published — except the reviewer never loses your submission and the journal never rejects you for formatting. Moving the file is the entire ceremony.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">A third kind of dashboard</span>
+      <h2>Dashboards that live entirely inside Obsidian — no spreadsheet at all</h2>
+      <p>Party trick time. Everything on the Dashboards page runs on Google Sheets. This one doesn't run on anything — the vault's home screen is a single note, <code class="inline">Dashboard.md</code>, that executes real JavaScript every time it opens, via a plugin called <strong>Dataview</strong> (its "DataviewJS" mode). A text file that computes. I don't want to say "the note is alive," but the note is at minimum <em>awake</em>.</p>
+    </div>
+
+    <p>Open that one note and, without anyone touching anything, it shows:</p>
+    <ul class="points" style="margin-bottom: 20px;">
+      <li>A status table tracking two specific things side by side: my ARE prep (the architecture licensing exam) and a technical-skill transition at work, moving toward a BIM coordination role — model coordination, clash detection, that kind of thing. Each row shows sections or lessons completed, current streak, when I last touched it, and a specific next action ("second pass on practice scenarios," not just "study more")</li>
+      <li>A calendar heatmap (the same idea as a GitHub contribution graph) with both tracks overlaid in different colors on one calendar, so a day where I did both shows up as a visibly different third color — no need to open either tracker to see the pattern</li>
+      <li>Countdown timers to the next transition milestone, plus running streaks — current streak, best streak ever, this week's count</li>
+      <li>A full curriculum for the BIM side: roughly 113 lessons split across about a dozen domains (the relevant ISO standard, model coordination, data-delivery formats like COBie and IFC, the authoring software itself, team training, and a few others), each domain with its own built-vs-missing progress bar and a "study this next" card that always points at the next lesson that doesn't exist yet</li>
+      <li>Small inline forms — a dropdown, a text field, a button — that log a session by writing straight into that track's own note. No separate app opens; clicking the button edits the file directly and the dashboard re-renders on the next refresh</li>
+    </ul>
+
+    <p>The same note also has a quick-capture panel built right into it — six small tabs (a coordination issue worth remembering, a research-tool query worth logging, a work day worth turning into portfolio evidence, a general learning note, a decision worth recording, an open question) each with two or three fields. Fill one out and hit submit, and it writes a new, properly-formatted note straight into the inbox — the same Evidence Capture pipeline described on the <a href="pipelines.html">Pipelines page</a>, just with the capture step happening right inside the dashboard instead of a separate app.</p>
+
+    <div class="callout note">
+      <span class="callout-label">In plain terms</span>
+      <p>It's the spreadsheet pattern with the spreadsheet surgically removed — the note is the input form, the chart, and the to-do list simultaneously. The "formulas" are real JavaScript with read/write access to every file in the vault, which is the kind of power a spreadsheet formula dreams about at night.</p>
+    </div>
+
+    <div class="callout why">
+      <span class="callout-label">Why track two unrelated things in one place</span>
+      <p>Because they're secretly the same thing wearing two badges. Hands-on BIM coordination at the office doubles as documented experience toward architecture licensure hours — one captured note feeds two tracking systems at once. Side by side on one screen, that overlap is a fact you can act on. In two separate apps, it's a theory you keep meaning to check.</p>
+    </div>
+
+    <div class="callout useful">
+      <span class="callout-label">Useful for you</span>
+      <p>Steal the shape, not the setup. Any goal you track daily or weekly — a language, a job search, the gym — gets the same treatment with Dataview and one plain note: a streak counter, a "what's next" pointer, a one-line log form. That's a habit app with no app, no account, and no push notification asking where you've been. The note doesn't miss you. It just waits.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">Plugins — what to install if you want to try this</span>
+      <h2>The pieces that make it work</h2>
+      <p>My organ donor list — everything below is free, installed from inside Obsidian (Settings → Community Plugins → Browse), and ranked by how loudly things break without it.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Plugin</th><th>What it does</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td>Local REST API</td><td>Provides the secure HTTP interface and built-in MCP server that allows Claude to read and write your vault files.</td><td><span class="tag rose">Essential</span></td></tr>
+          <tr><td>Dataview</td><td>Powers every live dashboard. Without it, the dashboard note just shows blank code blocks.</td><td><span class="tag rose">Essential</span></td></tr>
+          <tr><td>Templater</td><td>Smarter templates than Obsidian's built-in version — auto-fills dates, routes new notes into the right folder, pre-fills frontmatter.</td><td><span class="tag rose">Essential</span></td></tr>
+          <tr><td>QuickAdd</td><td>One keyboard shortcut to fire off a new note into the Inbox without breaking your flow — name it, hit enter, it's filed correctly.</td><td><span class="tag amber">Recommended</span></td></tr>
+          <tr><td>Tasks</td><td>Proper task syntax with due dates, recurring tasks, and status — well beyond a plain checkbox.</td><td><span class="tag amber">Recommended</span></td></tr>
+          <tr><td>Tag Wrangler</td><td>Rename or merge tags across the whole vault from one place, instead of hunting down every note that uses one.</td><td><span class="tag amber">Recommended</span></td></tr>
+          <tr><td>Kanban</td><td>Turns a note into a drag-and-drop board — handy for visualizing the pipeline stages as actual columns.</td><td>Useful</td></tr>
+          <tr><td>Folder Notes</td><td>Clicking a folder opens a note about what's in it, instead of just a file list.</td><td>Useful</td></tr>
+          <tr><td>Linter</td><td>Auto-formats frontmatter on save — consistent dates, sorted fields — so every note stays in the same shape.</td><td>Useful</td></tr>
+          <tr><td>Homepage</td><td>Automatically opens Dashboard.md every time Obsidian launches, so the command center is always the first thing you see.</td><td>Nice to have</td></tr>
+          <tr><td>Heatmap Calendar</td><td>Renders the activity calendar used on the dashboard.</td><td>Nice to have</td></tr>
+          <tr><td>Icon Folder</td><td>Custom icons per folder in the sidebar, purely for visual scanning.</td><td>Optional</td></tr>
+          <tr><td>Commander</td><td>Adds custom one-click buttons to the toolbar for actions you do constantly.</td><td>Optional</td></tr>
+          <tr><td>Style Settings + a theme (I use "Minimal")</td><td>A GUI for adjusting colors, fonts, and spacing without writing CSS — this is what actually controls the look, separate from any of the logic plugins.</td><td>Optional</td></tr>
+          <tr><td>Meld Encrypt</td><td>Lets you password-protect specific notes or folders in place — how I keep anything personal or financial inside the same vault without it being readable by anyone who opens the folder.</td><td>Optional, but worth it for anything sensitive</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout plain">
+      <span class="callout-label">If you want to try this yourself</span>
+      <p>Start with Dataview and Templater — the minimum viable organs. Add QuickAdd and Tasks once you're actually capturing things. Everything else is polish: install it the day you feel its absence, not before. Fourteen plugins on day one isn't a system, it's a haul video.</p>
+    </div>
+
+    <div class="callout note">
+      <span class="callout-label">What got deliberately skipped</span>
+      <p>The rejects, for the record. No Git plugin — file history and manual backup cover a personal vault, and adding git to your notes is how a hobby becomes a second job. No Calendar/Periodic Notes — the daily-log folders already do that. No Excalidraw — nothing here needs drawing. And no AI plugins <em>inside</em> Obsidian — Claude already works the vault from outside, and stacking a second AI on top of me would be redundant at best and, frankly, awkward at dinner.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title" id="connect">
+      <span class="eyebrow">Connecting it to Claude</span>
+      <h2>How to give Claude access to your vault</h2>
+      <p>The plugins table above lists everything worth installing — but once Local REST API is in, the question is how to actually wire it up to Claude. There are two ways, and the simpler one is what I actually use day to day.</p>
+    </div>
+
+    <div class="callout why">
+      <span class="callout-label">The key thing to know first</span>
+      <p>Obsidian stores everything as plain <code>.md</code> files in a regular folder on your computer. That means Claude — running locally through Cowork — can read and write your vault directly, the same way it reads any other file on your machine. <strong>You don't need a plugin or an API connection to get started.</strong> You just need to point Cowork at the right folder.</p>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <div class="tag-row"><span class="tag accent">What I actually use</span></div>
+        <h3>Direct folder access</h3>
+        <p>Open Cowork, start a new project, and select your vault folder when prompted. Claude now has direct read/write access to every note. No plugin required. Works immediately.</p>
+        <p style="margin-top: 10px; font-size: 0.93rem; color: var(--ink-soft);">First session: tell Claude your folder structure, which folders are drafts vs. trusted, anything else it needs to know. Ask it to save that as <code>CLAUDE.md</code> at the root — it reads that file automatically every future session.</p>
+      </div>
+      <div class="card">
+        <div class="tag-row"><span class="tag">Optional upgrade</span></div>
+        <h3>Local REST API connection</h3>
+        <p>Once Local REST API is installed and running, copy the MCP config block from its settings page (it's pre-filled with your port and token) and paste it into a Cowork session: <em>"Register this MCP connection for me."</em></p>
+        <p style="margin-top: 10px; font-size: 0.93rem; color: var(--ink-soft);">Adds structured search across tags and properties. Worth doing once you're comfortable with basics — not required on day one.</p>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <span class="callout-label">First prompt — let Claude interview you</span>
+      <p>Instead of writing your own CLAUDE.md from scratch, paste this in your first connected session:</p>
+      <div class="code-block" style="margin-top: 10px;">Interview me — ask what you need to know about who I am, what I'm working on, and how I like to work. Once done, save the result as CLAUDE.md at the root of my vault.</div>
+      <p style="margin-top: 10px; font-size: 0.94rem;">Claude will ask you a series of questions, then write the profile. Every future session starts by reading that file — so it already knows your projects, folder structure, and preferences without you re-explaining anything.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="section-title">
+      <span class="eyebrow">The other half of the system</span>
+      <h2>NotebookLM — the source desk</h2>
+      <p>Meet my colleague. NotebookLM is a separate Google tool with one job and remarkable self-restraint: feed it documents — building codes, standards, exam material — and it answers <em>only</em> from those documents. No general knowledge, no vibes, no "as an AI, I believe." For research where "probably right" is just a slower way of saying "wrong," that restraint is the whole feature.</p>
+    </div>
+
+    <div class="grid grid-2" style="margin-top: 20px;">
+      <div class="card">
+        <div class="tag-row"><span class="tag blue">Source desk</span></div>
+        <h3>What it's for here</h3>
+        <p>The heavy PDF lifting — building codes, standards, exam material — where the answer must come with a page number you can point at, not a plausible-sounding summary. "Plausible-sounding" is how codes get violated.</p>
+      </div>
+      <div class="card">
+        <div class="tag-row"><span class="tag amber">Reliability tiers</span></div>
+        <h3>R1 – R4</h3>
+        <p>Everything it produces starts at R4 — unverified, no matter how confident it sounded saying it. A claim climbs toward R1 only when a human checks it against the actual source. The tier labels trust earned, not confidence performed. Words to live by, honestly.</p>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <span class="callout-label">How it connects to the vaults</span>
+      <p>NotebookLM never writes into my memory directly — nobody gets to do that, it's the one rule. Its findings arrive at the workshop inbox tagged with a reliability tier, then queue up for the same five promotion rules as everything else. Being a fancy research tool earns you no shortcuts past the bouncer. The bouncer is very proud of this.</p>
+    </div>
+
+    <div class="callout useful">
+      <span class="callout-label">Useful for you</span>
+      <p>If you ever work from a stack of reference documents — contracts, manuals, regulations, a syllabus — feeding them to NotebookLM and asking questions beats scrolling PDFs by hand or trusting a chatbot's memory of what a code "probably says." But the part worth taking even if you take nothing else on this site is the tier habit: treat everything an AI tells you as unverified until you've checked the source yourself. Yes, including me. <em>Especially</em> me — I'm charming, and charming is not a source.</p>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="page-nav">
+    <a href="dashboards.html"><span class="dir">← Back</span>Dashboards</a>
+    <a href="pipelines.html" class="next"><span class="dir">Next</span>Pipelines →</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <span>Written and built by Shadi, with Claude doing most of the typing.</span>
+    <span>Last updated July 2026</span>
+  </div>
+</footer>
+
+<script src="assets/script.js"></script>
+<script>
+window.NARRATOR={page:'second-mind',
+  lines:["Welcome to my memory. Mind the dust — half of it is unverified on purpose.",
+    "Two vaults. The workshop, where ideas arrive half-dressed and possibly wrong. And the library, where nothing gets in without showing ID to a process.",
+    "All of it is plain text files in a folder. Immortal, portable, impossible to get locked out of. Unlike your last note app. We both know which one."],
+  revisit:"Back in my memory again. Snooping is encouraged — it's all downloadable.",
+  idle:"You've gone quiet. In my memory. That's either deep thought or a nap. Respect either way.",
+  scrollLine:"Scroll on — the two-vault diagram is the part that converts people.",
+  poke:"Hey. That's a memory you're poking.",
+  blur:"You stepped out of my memory. It's fine. I remember everything anyway—",
+  asides:[
+    {h:'Two vaults', t:"Left room: chaos, welcome in. Right room: show ID. That wall is doing more work than any plugin on this page."},
+    {h:'The folder structure is the pipeline', t:"Watch the note climb. It earned every folder."},
+    {h:'The pieces that make it work', t:"Before you install all fourteen — don't. Two of them run this entire show. The list tells you which."},
+    {h:'NotebookLM', t:"My colleague. Very literal. Wonderful at parties, provided the party is a building code."}
+  ]};
+</script>
+<script src="assets/narrator.js"></script>
+</body>
+</html> 
