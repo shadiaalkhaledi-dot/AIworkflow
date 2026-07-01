@@ -1,0 +1,110 @@
+{
+  "apiUrl": "PASTE_YOUR_APPS_SCRIPT_URL_HERE",
+  "meta": {
+    "title": "My Work Tracker",
+    "lede": "Replace this with a one-line description of your current focus or sprint.",
+    "sessionDate": "Jul 1, 2026",
+    "generated": "2026-07-01",
+    "sprintEnd": "2026-07-10",
+    "sprintEndLabel": "Jul 10"
+  },
+  "programs": [
+    {
+      "name": "Program A",
+      "color": "rgb(94,158,149)",
+      "packages": ["Package 1 — Description", "Package 2 — Description"]
+    },
+    {
+      "name": "Program B",
+      "color": "rgb(168,118,142)",
+      "packages": []
+    }
+  ],
+  "items": [
+    {
+      "id": "i1",
+      "title": "Example open item — replace with your real work",
+      "status": "open",
+      "program": "Program A",
+      "pkg": "Package 1 — Description",
+      "cat": "coordination",
+      "disc": ["owner"],
+      "court": "You",
+      "horizon": "week",
+      "action": "coordinate",
+      "date": "2026-07-01",
+      "due": "2026-07-10",
+      "why": "Why this matters or what's blocking it.",
+      "isNew": true
+    },
+    {
+      "id": "i2",
+      "title": "Example blocking item — something held up waiting on others",
+      "status": "blocking",
+      "program": "Program B",
+      "pkg": "",
+      "cat": "decisions",
+      "disc": ["owner"],
+      "court": "Client",
+      "delegate": "Jordan",
+      "horizon": "today",
+      "action": "chase",
+      "date": "2026-07-01",
+      "due": "2026-07-03",
+      "why": "Decision needed before we can proceed.",
+      "isNew": false
+    },
+    {
+      "id": "i3",
+      "title": "Example watch item — low priority, monitoring only",
+      "status": "watch",
+      "program": "Program A",
+      "pkg": "Package 2 — Description",
+      "cat": "coordination",
+      "disc": ["owner"],
+      "court": "Consultant",
+      "horizon": "watch",
+      "action": "review",
+      "date": "2026-06-28",
+      "why": "Watching in case it becomes urgent.",
+      "isNew": false
+    }
+  ],
+  "details": {
+    "i1": {
+      "next": "Send follow-up email to confirm details.",
+      "subtasks": ["Draft the email", "Get sign-off", "Send"],
+      "updates": [
+        "2026-07-01|Initial discussion — awaiting response"
+      ]
+    },
+    "i2": {
+      "next": "Chase client for decision by EOD.",
+      "subtasks": [],
+      "updates": [
+        "2026-06-30|Sent decision request to client",
+        "2026-07-01|No response yet — escalating"
+      ]
+    }
+  },
+  "voice": [
+    {
+      "h4": "What we covered this session",
+      "p": "Replace this with a summary of key decisions or updates from your check-in with Claude."
+    }
+  ],
+  "completedThisWeek": [
+    {
+      "h3": "Program A",
+      "accent": "rgb(94,158,149)",
+      "h3color": "rgb(94,158,149)",
+      "items": [
+        {
+          "h4": "Example completed item",
+          "p": "Brief note on what was resolved and how."
+        }
+      ]
+    }
+  ],
+  "completedLastWeek": []
+}
