@@ -341,4 +341,48 @@
     <div class="section-title">
       <span class="eyebrow">The other half of the system</span>
       <h2>NotebookLM — the source desk</h2>
-      <p>NotebookLM is a separate Google tool, and it does one specific thing well: you feed it documents (PDFs, in my case — things like building codes and exam study material), and it will only 
+      <p>NotebookLM is a separate Google tool, and it does one specific thing well: you feed it documents (PDFs, in my case — things like building codes and exam study material), and it will only answer using those documents — no general knowledge, no guessing from training data. That makes it good for exactly the kind of research where "probably right" isn't good enough.</p>
+    </div>
+
+    <div class="grid grid-2" style="margin-top: 20px;">
+      <div class="card">
+        <div class="tag-row"><span class="tag blue">Source desk</span></div>
+        <h3>What it's for here</h3>
+        <p>Heavy PDF research — building codes, standards documents, exam study material — where I need an answer grounded in a specific source, with a page or section I can point back to, not a plausible-sounding summary.</p>
+      </div>
+      <div class="card">
+        <div class="tag-row"><span class="tag amber">Reliability tiers</span></div>
+        <h3>R1 – R4</h3>
+        <p>Everything NotebookLM produces starts at R4 (unverified) by default. It only moves up toward R1 once I've checked the claim against the actual source document myself — the tier is a label on trust, not on how confident the tool sounds.</p>
+      </div>
+    </div>
+
+    <div class="callout note">
+      <span class="callout-label">How it connects to the vaults</span>
+      <p>NotebookLM doesn't write directly into either vault. A finding gets pulled out, tagged with its reliability tier, and dropped into the Ops Vault inbox like anything else new — from there it goes through the same five promotion rules before it's trusted enough to land in the Main Vault. NotebookLM is a research tool, not a shortcut around verification.</p>
+    </div>
+
+    <div class="callout useful">
+      <span class="callout-label">Useful for you</span>
+      <p>If you ever work from a stack of reference documents — contracts, manuals, regulations, a syllabus — feeding them into NotebookLM and asking it questions beats scanning PDFs by hand or trusting a general chatbot's memory of what a code "probably says." The reliability-tier habit is the part worth borrowing even without the rest of this system: treat anything an AI tells you as unverified until you've actually checked it against the source.</p>
+    </div>
+  </div>
+</section>
+
+<div class="container">
+  <div class="page-nav">
+    <a href="dashboards.html"><span class="dir">← Back</span>Dashboards</a>
+    <a href="pipelines.html" class="next"><span class="dir">Next</span>Pipelines →</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="container">
+    <span>Written and built by Shadi, with Claude doing most of the typing.</span>
+    <span>Last updated July 2026</span>
+  </div>
+</footer>
+
+<script src="assets/script.js"></script>
+</body>
+</html> 
