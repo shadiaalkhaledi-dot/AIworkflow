@@ -19,21 +19,17 @@ A small static website explaining what's been built with Claude, Obsidian, and N
 
 No build step, no dependencies — it's plain HTML/CSS. Open `index.html` directly in a browser to preview it.
 
-## Deploying to Netlify (no account needed for the quickest option)
+## Deploying (GitHub Pages — what's actually live)
 
-**Note:** this Netlify section is for deploying *this informational site* (the pages listed above). It's unrelated to the work tracker itself — the work tracker's own live site is deployed to GitHub Pages, per `work-tracker-guide.html`'s own instructions, not Netlify (an earlier Netlify-based version of the tracker was tried and abandoned).
+This site is live at `https://shadiaalkhaledi-dot.github.io/AIworkflow/`, hosted the same way as the work tracker itself — a GitHub repo with Pages enabled, no separate hosting account or Netlify involved.
 
-**Option A — drag and drop (fastest):**
-1. Go to [app.netlify.com/drop](https://app.netlify.com/drop)
-2. Drag this entire folder onto the page
-3. Netlify gives you a live URL immediately — share that with your friend
+**To update it after editing a file:**
+1. Go to the `AIworkflow` repo on github.com
+2. Click the file you changed (or navigate into a subfolder like `assets/skills/` first if you're adding a new file there)
+3. Click the pencil icon to edit in place, or **Add file → Upload files** to drag one in
+4. Commit changes — GitHub Pages rebuilds automatically on every push to `main`, no manual redeploy step
 
-**Option B — connected to a Netlify account (lets you update it later):**
-1. Create a free account at [netlify.com](https://netlify.com)
-2. "Add new site" → "Deploy manually" → drag this folder in
-3. Optional: under Site settings → Domain management, pick a friendlier subdomain than the random one Netlify assigns
-
-To update the site later, just re-drag the folder after editing the files — Netlify replaces the old version.
+Same filename = it just replaces the old version. Give it a few minutes after a push for GitHub's CDN to catch up before checking the live site.
 
 ## Editing
 
