@@ -129,7 +129,7 @@
 
   <footer class="site-footer">
     <div class="container">
-      <span>Drafted by Shadi, narrated by Claude. &middot; v2026-07-02.1</span>
+      <span>Drafted by Shadi, narrated by Claude. &middot; v2026-07-03.2</span>
       <span>Locked with your own password &mdash; nothing here is stored anywhere else.</span>
     </div>
   </footer>
@@ -177,7 +177,20 @@ async function tryUnlock(password){
   }
 }
 
+var STORAGE_KEY = "annex-knock";
+
 function render(content){
+  /* "since your last knock" — if the payload version moved since the last
+     visit, the narrator opens with the changelog instead of the stock line. */
+  if (content.version){
+    var lastV = null;
+    try{ lastV = localStorage.getItem("annex-version"); }catch(e){}
+    if (lastV && lastV !== content.version && content.changelog && content.narrator){
+      content.narrator.revisit = content.changelog;
+    }
+    try{ localStorage.setItem("annex-version", content.version); }catch(e){}
+  }
+
   document.title = content.h1 + " — Inside My AI Workflow";
   document.getElementById("heroEyebrow").textContent = content.eyebrow;
   document.getElementById("heroH1").textContent = content.h1;

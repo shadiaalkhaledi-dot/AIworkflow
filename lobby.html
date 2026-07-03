@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>&middot;&middot;&middot;</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  /* ---- The Lobby: inside the Annex, so already past the door. Daylight. ----
+     Amber is the resident; indigo holds the reserved seat. */
+  .hairline{background:linear-gradient(90deg, #f59e0b 0%, #4f46e5 55%, transparent 95%);}
+
+  .seats{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:820px;margin:34px auto 0;}
+  @media(max-width:640px){.seats{grid-template-columns:1fr;}}
+  .seat{border-radius:16px;padding:22px 22px 20px;text-align:left;background:#fff;border:1px solid var(--line);}
+  .seat.occupied{border-color:#f5c96b;box-shadow:0 10px 30px rgba(245,158,11,0.12);background:linear-gradient(180deg,#fffdf7,#fff8ec);}
+  .seat.reserved{border-style:dashed;border-color:#c7d2fe;background:#fafbff;}
+  .seat .seat-tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+    padding:4px 10px;border-radius:20px;margin-bottom:12px;}
+  .seat.occupied .seat-tag{background:#fff1d6;color:#b45309;}
+  .seat.reserved .seat-tag{background:#eef2ff;color:#4f46e5;}
+  .seat h3{margin:0 0 8px;font-size:1.15rem;}
+  .seat p{font-size:.92rem;line-height:1.6;margin:0;color:#5d5a52;}
+
+  .stage{max-width:680px;margin:44px auto 0;padding:0 24px 10px;}
+  .stage-label{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#8a8579;margin-bottom:16px;text-align:center;}
+  .say{margin:0 0 16px;opacity:0;transform:translateY(6px);transition:opacity .4s,transform .4s;}
+  .say.on{opacity:1;transform:none;}
+  .say .who{display:block;font-size:.7rem;font-weight:700;letter-spacing:.1em;margin-bottom:5px;}
+  .say.amber .who{color:#b45309;}
+  .say.amber .bubble{background:#fff8ec;border:1px solid #f7dfae;
+    border-radius:2px 14px 14px 14px;padding:12px 16px;font-size:.96rem;line-height:1.65;color:#3d3a33;}
+  .say.seat-line{text-align:right;}
+  .say.seat-line .who{color:#4f46e5;}
+  .say.seat-line .bubble{display:inline-block;text-align:left;background:#f6f7ff;border:1px dashed #c7d2fe;
+    border-radius:14px 2px 14px 14px;padding:10px 15px;color:#71749a;font-style:italic;font-size:.88rem;line-height:1.6;}
+  .lob-caret{display:inline-block;width:8px;height:1.05em;background:#f59e0b;vertical-align:-2px;margin-left:2px;animation:lobBlink 1s steps(1) infinite;}
+  @keyframes lobBlink{50%{opacity:0;}}
+
+  .how{max-width:680px;margin:40px auto 0;padding:0 24px;}
+  .how ol{margin:14px 0 16px;padding-left:20px;font-size:.93rem;line-height:1.7;color:#5d5a52;}
+  .how ol li{margin-bottom:6px;}
+  .how a.skill-dl{display:inline-flex;align-items:center;gap:8px;color:#b45309;font-size:.88rem;font-weight:700;
+    padding:9px 15px;border-radius:10px;border:1px solid #f5c96b;text-decoration:none;}
+  .how a.skill-dl:hover{background:#fff8ec;}
+  .back-row{max-width:680px;margin:34px auto 0;padding:0 24px;text-align:center;}
+
+  #app{display:none;}
+  @media (prefers-reduced-motion: reduce){.say{transition:none;opacity:1;transform:none;}.lob-caret{animation:none;}}
+</style>
+</head>
+<body class="theme-dialog">
+
+<div class="hairline"></div>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="mark">AI</span> Inside My AI Workflow</a>
+    <div class="nav-links">
+      <a href="dialog-intelligence.html">&larr; The Annex</a>
+    </div>
+  </div>
+</nav>
+
+<div id="app">
+  <header class="hero">
+    <div class="container" style="text-align:center;">
+      <span class="eyebrow" id="heroEyebrow" style="color:#b45309;"></span>
+      <h1 id="heroH1"></h1>
+      <p class="lead" id="heroLead" style="margin:0 auto;max-width:560px;"></p>
+      <div class="seats" id="seatsMount"></div>
+    </div>
+  </header>
+
+  <div class="stage">
+    <div class="stage-label">On the record, while we wait</div>
+    <div id="stageMount"></div>
+  </div>
+
+  <div class="how" id="howMount">
+    <div class="card" id="howCard">
+      <h3 id="howTitle" style="margin-top:0;"></h3>
+      <ol id="howSteps"></ol>
+      <a class="skill-dl" id="skillLink" download></a>
+    </div>
+  </div>
+
+  <div class="back-row"><a href="dialog-intelligence.html">&larr; Back to the Annex</a></div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span id="footerLine"></span>
+      <span>Drafted by Shadi, narrated by Claude. &middot; v2026-07-03.2</span>
+    </div>
+  </footer>
+</div>
+
+<script src="assets/lobby-payload.js"></script>
+<script>
+/* No gate here — the knock belongs to the Annex door. The Annex remembers it
+   (localStorage); the lobby just uses it. If it isn't there, or it's stale,
+   you get walked back to the door instead of being asked again. */
+var STORAGE_KEY = "annex-knock";
+
+async function deriveKey(password, saltB64, iterations){
+  var enc = new TextEncoder();
+  var salt = Uint8Array.from(atob(saltB64), function(c){return c.charCodeAt(0);});
+  var baseKey = await crypto.subtle.importKey("raw", enc.encode(password), {name:"PBKDF2"}, false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2", salt:salt, iterations:iterations, hash:"SHA-256"},
+    baseKey, {name:"AES-GCM", length:256}, false, ["decrypt"]);
+}
+function b64ToBytes(b64){ return Uint8Array.from(atob(b64), function(c){return c.charCodeAt(0);}); }
+
+async function tryUnlock(password){
+  try{
+    var p = window.LOBBY_PAYLOAD;
+    var key = await deriveKey(password, p.salt, p.iterations);
+    var buf = await crypto.subtle.decrypt({name:"AES-GCM", iv:b64ToBytes(p.iv)}, key, b64ToBytes(p.ciphertext));
+    return JSON.parse(new TextDecoder().decode(buf));
+  }catch(e){ return null; }
+}
+
+function typeInto(el, txt, cb){
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced){ el.textContent = txt; if (cb) cb(); return; }
+  var caret = document.createElement('span'); caret.className = 'lob-caret'; el.appendChild(caret);
+  var i = 0;
+  (function tick(){
+    if (el.__finish){ el.textContent = txt; if (cb) cb(); return; }
+    if (i < txt.length){
+      el.insertBefore(document.createTextNode(txt.charAt(i)), caret); i++;
+      setTimeout(tick, txt.charAt(i-1) === '.' ? 70 : 15);
+    } else { caret.remove(); if (cb) setTimeout(cb, 500); }
+  })();
+}
+
+function render(c){
+  document.title = c.h1 + " — Inside My AI Workflow";
+  document.getElementById("heroEyebrow").textContent = c.eyebrow;
+  document.getElementById("heroH1").textContent = c.h1;
+  document.getElementById("heroLead").textContent = c.lead;
+
+  var seats = document.getElementById("seatsMount");
+  c.seats.forEach(function(s){
+    var d = document.createElement("div");
+    d.className = "seat " + s.state;
+    d.innerHTML = '<span class="seat-tag"></span><h3></h3><p></p>';
+    d.querySelector(".seat-tag").textContent = s.tag;
+    d.querySelector("h3").textContent = s.name;
+    d.querySelector("p").textContent = s.desc;
+    seats.appendChild(d);
+  });
+
+  document.getElementById("howTitle").textContent = c.how.title;
+  var ol = document.getElementById("howSteps");
+  c.how.steps.forEach(function(st){ var li = document.createElement("li"); li.textContent = st; ol.appendChild(li); });
+  var a = document.getElementById("skillLink");
+  a.href = c.how.skillHref;
+  a.innerHTML = "&#10515; "; a.appendChild(document.createTextNode(c.how.skillNote));
+
+  document.getElementById("footerLine").textContent = c.footer;
+  document.getElementById("app").style.display = "block";
+
+  /* the stage: typed line by line, click a line to skip its typing */
+  var mount = document.getElementById("stageMount");
+  var idx = 0;
+  function next(){
+    if (idx >= c.script.length) return;
+    var line = c.script[idx++];
+    var wrap = document.createElement("div");
+    wrap.className = "say " + (line.who === "amber" ? "amber" : "seat-line");
+    var who = document.createElement("span"); who.className = "who";
+    who.textContent = line.who === "amber" ? "SHADI'S" : "THE RESERVED SEAT";
+    var bubble = document.createElement("div"); bubble.className = "bubble";
+    wrap.appendChild(who); wrap.appendChild(bubble);
+    bubble.addEventListener("click", function(){ bubble.__finish = true; });
+    mount.appendChild(wrap);
+    requestAnimationFrame(function(){ wrap.classList.add("on"); });
+    typeInto(bubble, line.t, next);
+  }
+  setTimeout(next, 400);
+}
+
+(function init(){
+  var remembered = null;
+  try{ remembered = localStorage.getItem(STORAGE_KEY); }catch(e){}
+  if (!remembered){ window.location.replace("dialog-intelligence.html"); return; }
+  tryUnlock(remembered).then(function(content){
+    if (content){ render(content); }
+    else { window.location.replace("dialog-intelligence.html"); }
+  });
+})();
+</script>
+
+</body>
+</html>
