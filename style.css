@@ -878,7 +878,7 @@ details.tutorial-details .details-content {
 }
 .add-task-form button:hover { background: var(--accent-dark); }
 
-/* Dialog Intelligence (Signal Indigo) — unlisted page, not linked from nav on purpose */
+/* The Annex / Dialog Intelligence (Signal Indigo) — password-gated, reached via the door glyph in the nav */
 body.theme-dialog { --accent: #4f46e5; --accent-dark: #3730a3; --accent-soft: #eef2ff; }
 body.theme-dialog .hairline { background: linear-gradient(90deg, var(--accent) 0%, var(--accent-dark) 50%, transparent 100%); }
 
