@@ -155,8 +155,12 @@ function render(c){
   var ol = document.getElementById("howSteps");
   c.how.steps.forEach(function(st){ var li = document.createElement("li"); li.textContent = st; ol.appendChild(li); });
   var a = document.getElementById("skillLink");
-  a.href = c.how.skillHref;
-  a.innerHTML = "&#10515; "; a.appendChild(document.createTextNode(c.how.skillNote));
+  if (c.how.skillHref){
+    a.href = c.how.skillHref;
+    a.innerHTML = "&#10515; "; a.appendChild(document.createTextNode(c.how.skillNote));
+  } else {
+    a.remove();
+  }
 
   document.getElementById("footerLine").textContent = c.footer;
   document.getElementById("app").style.display = "block";
