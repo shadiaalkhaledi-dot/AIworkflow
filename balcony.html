@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>&middot;&middot;&middot;</title>
+<link rel="stylesheet" href="assets/style.css">
+<style>
+  /* ---- the door: dark, elevated, unlit until you knock (matches the Annex) ---- */
+  html{background:#0a0b10;}
+  body{transition:background-color .9s ease, color .9s ease;}
+  body.gate-locked{background:#0a0b10;color:#e4e6f0;}
+  body.gate-locked .site-nav{background:rgba(10,11,16,0.82);border-bottom-color:rgba(255,255,255,0.08);}
+  body.gate-locked .nav-logo{color:#e4e6f0;}
+  body.gate-locked .nav-logo .mark{background:var(--accent);}
+  body.gate-locked .nav-links a{color:#8d90a8;}
+  body.gate-locked .nav-links a:hover{color:#cfd2ea;}
+  body.gate-locked .hairline{opacity:0.9;background:linear-gradient(90deg, transparent, var(--accent) 45%, transparent 90%);background-size:200% 100%;animation:hairlineDrift 6s ease-in-out infinite;}
+  @keyframes hairlineDrift{0%,100%{background-position:0% 0;}50%{background-position:100% 0;}}
+
+  .gate-wrap{min-height:64vh;display:flex;align-items:center;justify-content:center;padding:60px 24px;position:relative;overflow:hidden;}
+  .gate-wrap::before{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(480px 320px at 50% 38%, rgba(79,70,229,0.24), transparent 70%);animation:glowBreathe 5s ease-in-out infinite;}
+  @keyframes glowBreathe{0%,100%{opacity:0.65;transform:scale(1);}50%{opacity:1;transform:scale(1.06);}}
+  .gate-card{max-width:420px;width:100%;text-align:center;position:relative;z-index:1;background:linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015));border:1px solid rgba(255,255,255,0.09);box-shadow:0 24px 70px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.05);backdrop-filter:blur(6px);animation:gateIn .7s ease both;}
+  @keyframes gateIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+  .gate-icon{margin:2px auto 18px;width:46px;height:46px;color:#9b96f5;filter:drop-shadow(0 0 10px rgba(124,111,245,0.5));}
+  .gate-card h1{font-size:1.5rem;margin-bottom:10px;color:#f1f2fa;letter-spacing:-0.01em;}
+  .gate-card .tag{background:rgba(255,255,255,0.07);color:#a9acc4;}
+  .gate-card p.gate-sub{color:#9a9db8;font-size:0.95rem;margin-bottom:22px;}
+  .gate-form{display:flex;gap:8px;margin-bottom:12px;}
+  .gate-form input{flex:1;font-family:inherit;font-size:0.95rem;border:1px solid rgba(255,255,255,0.14);border-radius:var(--radius-sm);padding:11px 14px;background:rgba(255,255,255,0.05);color:#f1f2fa;text-align:center;letter-spacing:0.04em;}
+  .gate-form input::placeholder{color:#71749090;}
+  .gate-form input:focus{outline:none;border-color:#7c6ff5;background:rgba(255,255,255,0.08);box-shadow:0 0 0 3px rgba(124,111,245,0.18);}
+  .gate-form .btn-download{width:auto;white-space:nowrap;box-shadow:0 6px 20px rgba(79,70,229,0.35);}
+  .gate-form .btn-download:hover{box-shadow:0 8px 26px rgba(79,70,229,0.5);}
+  .gate-error{color:#ef8b83;font-size:0.85rem;min-height:1.2em;margin:0 0 10px;opacity:0;transition:opacity .2s;}
+  .gate-error.on{opacity:1;}
+  .gate-shake{animation:shake .4s;}
+  @keyframes shake{20%{transform:translateX(-6px);}40%{transform:translateX(6px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}100%{transform:translateX(0);}}
+  .gate-hint{font-size:0.82rem;color:#71749a;font-style:italic;margin-top:14px;}
+  .gate-wrap.leaving{animation:gateOut .5s ease forwards;}
+  @keyframes gateOut{to{opacity:0;transform:scale(0.98);}}
+  #app{display:none;}
+  #app.entering{animation:appIn .6s ease both;}
+  @keyframes appIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+  /* ---- content (light, blends with the rooms: amber cards / indigo accents) ---- */
+  .room-hero{text-align:center;padding-bottom:8px;}
+  .room-hero .eyebrow{color:#b45309;}
+  .room-hero p.lead{margin:0 auto;max-width:620px;}
+  .balc-wrap{max-width:760px;margin:0 auto;padding:0 24px;}
+  .balc-intro{margin:34px auto 0;font-size:.98rem;line-height:1.7;color:#5d5a52;}
+  .room-note{margin:30px auto 0;padding:14px 18px;border-left:3px solid #f59e0b;background:#fffaf0;border-radius:0 12px 12px 0;font-size:.9rem;line-height:1.65;color:#5d5a52;}
+  .room-note.indigo{border-left-color:#4f46e5;background:#f6f7ff;}
+  .room-note h3{margin:0 0 8px;font-size:.95rem;color:#2b2a27;}
+  .room-note ul{margin:0;padding-left:18px;}
+  .room-note li{margin:0 0 7px;}
+  .sec-title{margin:46px auto 0;font-size:1.15rem;color:#2b2a27;text-align:center;}
+  .group-title{max-width:760px;margin:28px auto 2px;padding:0 24px;font-size:1rem;color:#b45309;}
+  .group-sub{max-width:760px;margin:0 auto 2px;padding:0 24px;font-size:.86rem;color:#8a8579;}
+  .log{margin:18px auto 0;}
+  .log-entry{position:relative;padding:18px 20px 18px 22px;background:#fff;border:1px solid var(--line);border-radius:4px 16px 16px 16px;margin-bottom:16px;box-shadow:0 6px 18px rgba(43,42,39,.06);}
+  .log-entry::before{content:"";position:absolute;top:-7px;left:22px;width:12px;height:12px;border-radius:50%;background:#f59e0b;box-shadow:0 1px 3px rgba(0,0,0,.3);}
+  .log-stamp{font-size:.7rem;font-weight:800;letter-spacing:.12em;padding:3px 10px;border-radius:4px;display:inline-block;margin-bottom:9px;background:#fff1d6;color:#b45309;border:1px solid #f5c96b;}
+  .log-stamp.done{background:#e3f7ee;color:#0a7d57;border-color:#bfe8d4;}
+  .log-stamp.fail{background:#fdeceb;color:#b3423a;border-color:#f5cdc9;}
+  .log-date{float:right;font-size:.75rem;color:#b3aea2;}
+  .log-entry h3{margin:0 0 8px;font-size:1rem;}
+  .log-entry p{margin:0 0 7px;font-size:.9rem;line-height:1.6;color:#5d5a52;}
+  .log-entry p b{color:#2b2a27;}
+  .dl-card{background:linear-gradient(180deg,#fffdf7,#fff8ec);border:1px solid #f5c96b;border-radius:16px;padding:20px 22px;margin:16px auto 0;}
+  .dl-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+  .dl-card h3{margin:0;font-size:1.05rem;}
+  .dl-ver{font-size:.72rem;font-weight:700;letter-spacing:.06em;color:#b45309;background:#fff1d6;padding:3px 9px;border-radius:20px;}
+  .dl-card .contains{font-size:.82rem;color:#8a7a55;margin:8px 0 4px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;line-height:1.5;}
+  .dl-card .note{font-size:.9rem;color:#5d5a52;margin:6px 0 14px;line-height:1.6;}
+  .dl-card a.btn-download{display:inline-block;text-decoration:none;}
+  .dl-lock{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;}
+  .dl-lock-input{flex:0 1 200px;font-family:inherit;font-size:.9rem;border:1px solid #f0d9a8;border-radius:var(--radius-sm);padding:9px 12px;background:#fffdf7;color:#2b2a27;}
+  .dl-lock-input:focus{outline:none;border-color:#f59e0b;box-shadow:0 0 0 3px rgba(245,158,11,.15);}
+  .dl-lock .btn-download{white-space:nowrap;cursor:pointer;border:none;}
+  .dl-lock-err{color:#b3423a;font-size:.82rem;margin:8px 0 0;}
+  @media(max-width:480px){.log-date{float:none;display:block;margin:-2px 0 8px;}}
+  @media (prefers-reduced-motion: reduce){.gate-wrap::before,.gate-card,.hairline,.gate-wrap.leaving,#app.entering{animation:none;}}
+</style>
+</head>
+<body class="theme-dialog gate-locked">
+
+<div class="hairline"></div>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo"><span class="mark">AI</span> Inside My AI Workflow</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="dashboards.html">Dashboards</a>
+      <a href="work-tracker-guide.html">Work Tracker</a>
+      <a href="second-mind.html">The Second Mind</a>
+      <a href="pipelines.html">Pipelines</a>
+      <a href="skills.html">Skills</a>
+      <a href="glossary.html">Glossary</a>
+      <a href="dialog-intelligence.html" title="The Annex" aria-label="The Annex" style="display:inline-flex;align-items:center;gap:5px;">
+        <svg width="13" height="13" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;"><rect x="10" y="5" width="28" height="40" rx="3" stroke="currentColor" stroke-width="3.4"/><circle cx="30.5" cy="25" r="2.6" fill="currentColor"/></svg>
+      </a>
+      <a href="balcony.html" class="active" title="The Balcony" aria-label="The Balcony" style="display:inline-flex;align-items:center;gap:5px;">
+        <svg width="13" height="13" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;"><path d="M8 17H40M8 40H40" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"/><path d="M14 18V40M24 18V40M34 18V40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<div class="gate-wrap" id="gateWrap">
+  <div class="card gate-card">
+    <svg class="gate-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8 17H40M8 40H40" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M14 18V40M24 18V40M34 18V40" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+    </svg>
+    <div class="tag-row" style="justify-content:center;display:flex;"><span class="tag">no sign on this one either</span></div>
+    <h1>Knock, then.</h1>
+    <p class="gate-sub">Another door without a sign &mdash; where the move gets written down and files get handed across the gap. If that means nothing to you, it isn't meant to. Same knock as the Annex.</p>
+    <div class="gate-form">
+      <input type="password" id="gatePw" placeholder="the knock" autocomplete="off">
+      <button class="btn-download" id="gateBtn" type="button">Knock &rarr;</button>
+    </div>
+    <p class="gate-error" id="gateError">Wrong knock. The door stays shut.</p>
+    <p class="gate-hint">(Ben &mdash; it's the same one as the Annex.)</p>
+  </div>
+</div>
+
+<div id="app">
+  <header class="hero room-hero">
+    <div class="container">
+      <span class="eyebrow" id="heroEyebrow"></span>
+      <h1 id="heroH1"></h1>
+      <p class="lead" id="heroLead"></p>
+    </div>
+  </header>
+
+  <div id="mount"></div>
+
+  <footer class="site-footer">
+    <div class="container">
+      <span>Same knock as the front door. Nothing here is stored anywhere but behind it.</span>
+      <span>Drafted by Shadi, narrated by Claude. &middot; balcony v2026-07-04.1</span>
+    </div>
+  </footer>
+</div>
+
+<script src="assets/balcony-payload.js"></script>
+<script>
+(function(){
+  var STORAGE_KEY = "annex-knock";
+  function b64(b){ return Uint8Array.from(atob(b), function(c){return c.charCodeAt(0);}); }
+  async function unlock(pw){
+    try{
+      var p = window.BALCONY_PAYLOAD;
+      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), {name:"PBKDF2"}, false, ["deriveKey"]);
+      var key = await crypto.subtle.deriveKey({name:"PBKDF2", salt:b64(p.salt), iterations:p.iterations, hash:"SHA-256"}, base, {name:"AES-GCM", length:256}, false, ["decrypt"]);
+      var buf = await crypto.subtle.decrypt({name:"AES-GCM", iv:b64(p.iv)}, key, b64(p.ciphertext));
+      return JSON.parse(new TextDecoder().decode(buf));
+    }catch(e){ return null; }
+  }
+  async function decBytes(p, pw){
+    try{
+      var base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pw), {name:"PBKDF2"}, false, ["deriveKey"]);
+      var key = await crypto.subtle.deriveKey({name:"PBKDF2", salt:b64(p.salt), iterations:p.iterations, hash:"SHA-256"}, base, {name:"AES-GCM", length:256}, false, ["decrypt"]);
+      var buf = await crypto.subtle.decrypt({name:"AES-GCM", iv:b64(p.iv)}, key, b64(p.ciphertext));
+      return new Uint8Array(buf);
+    }catch(e){ return null; }
+  }
+  function el(tag, cls, text){ var e=document.createElement(tag); if(cls)e.className=cls; if(text)e.textContent=text; return e; }
+  function para(parent, label, text){ if(!text)return; var p=el("p"); var b=el("b",null,label+" "); p.appendChild(b); p.appendChild(document.createTextNode(text)); parent.appendChild(p); }
+
+  function buildContent(c){
+    document.title = c.h1 + " — Inside My AI Workflow";
+    document.getElementById("heroEyebrow").textContent = c.eyebrow;
+    document.getElementById("heroH1").textContent = c.h1;
+    document.getElementById("heroLead").textContent = c.lead;
+    var wrap = el("div","balc-wrap");
+    if(c.intro) wrap.appendChild(el("p","balc-intro",c.intro));
+    if(c.howItWorks){
+      var hw = el("div","room-note indigo");
+      hw.appendChild(el("h3",null,c.howItWorks.title));
+      var ul = el("ul");
+      c.howItWorks.points.forEach(function(pt){ ul.appendChild(el("li",null,pt)); });
+      hw.appendChild(ul); wrap.appendChild(hw);
+    }
+    if(c.log && c.log.length){
+      wrap.appendChild(el("h2","sec-title","Migration log"));
+      var log = el("div","log");
+      c.log.forEach(function(e){
+        var entry = el("div","log-entry");
+        var st=(e.stamp||"").toLowerCase(), cls = st==="done"?"done":(st==="fail"?"fail":"");
+        entry.appendChild(el("span","log-stamp "+cls, e.stamp||"LOG"));
+        entry.appendChild(el("span","log-date", e.date||""));
+        entry.appendChild(el("h3",null,e.title));
+        para(entry,"Did:",e.what); para(entry,"Result:",e.result);
+        log.appendChild(entry);
+      });
+      wrap.appendChild(log);
+    }
+    function dlCard(d){
+      var card = el("div","dl-card"), head = el("div","dl-head");
+      head.appendChild(el("h3",null,d.label));
+      if(d.version) head.appendChild(el("span","dl-ver","v"+d.version));
+      if(d.locked) head.appendChild(el("span","dl-ver","🔒 my password"));
+      card.appendChild(head);
+      if(d.contains) card.appendChild(el("div","contains",d.contains));
+      if(d.note) card.appendChild(el("p","note",d.note));
+      if(d.enc){
+        // password-gated: the download button only appears after the correct password
+        var form=el("div","dl-lock"), slot=el("div");
+        var inp=document.createElement("input"); inp.type="password"; inp.placeholder="my password"; inp.className="dl-lock-input"; inp.autocomplete="off";
+        var btn=el("button","btn-download","Unlock ↓"); btn.type="button";
+        var err=el("p","dl-lock-err","Wrong password."); err.style.display="none";
+        form.appendChild(inp); form.appendChild(btn);
+        card.appendChild(form); card.appendChild(err); card.appendChild(slot);
+        var go=function(){ var pw=inp.value; if(!pw) return; btn.disabled=true;
+          decBytes(d.enc, pw).then(function(bytes){ btn.disabled=false;
+            if(bytes){ var a=el("a","btn-download","Download "+d.file+" ↓"); a.href=URL.createObjectURL(new Blob([bytes],{type:d.mime||"application/octet-stream"})); a.setAttribute("download",d.file); form.style.display="none"; err.style.display="none"; slot.appendChild(a); }
+            else { err.style.display="block"; inp.value=""; inp.focus(); }
+          });
+        };
+        btn.addEventListener("click",go);
+        inp.addEventListener("keydown",function(e){ if(e.key==="Enter") go(); });
+      } else {
+        var a = el("a","btn-download","Download "+d.file+" ↓");
+        if(d.dataB64){ var by=Uint8Array.from(atob(d.dataB64),function(ch){return ch.charCodeAt(0);}); a.href=URL.createObjectURL(new Blob([by],{type:d.mime||"application/octet-stream"})); }
+        else if(d.href){ a.href=d.href; }
+        a.setAttribute("download", d.file);
+        card.appendChild(a);
+      }
+      return card;
+    }
+    if(c.dropbox && c.dropbox.length){
+      wrap.appendChild(el("h2","sec-title","The drop box"));
+      c.dropbox.forEach(function(g){
+        wrap.appendChild(el("h3","group-title",g.group));
+        if(g.subtitle) wrap.appendChild(el("p","group-sub",g.subtitle));
+        (g.items||[]).forEach(function(d){ wrap.appendChild(dlCard(d)); });
+      });
+    }
+    if(c.forBen){
+      var fb = el("div","room-note");
+      fb.appendChild(el("h3",null,c.forBen.title));
+      c.forBen.lines.forEach(function(ln){ var p=el("p",null,ln); p.style.margin="0 0 9px"; fb.appendChild(p); });
+      wrap.appendChild(fb);
+    }
+    if(c.closing) wrap.appendChild(el("div","room-note indigo",c.closing));
+    document.getElementById("mount").appendChild(wrap);
+  }
+
+  function reveal(content){
+    buildContent(content);
+    var gateWrap=document.getElementById("gateWrap"), appEl=document.getElementById("app");
+    document.documentElement.style.background="var(--bg)";
+    document.body.classList.remove("gate-locked");
+    gateWrap.classList.add("leaving");
+    setTimeout(function(){ gateWrap.style.display="none"; appEl.style.display="block"; appEl.classList.add("entering"); }, 460);
+  }
+
+  var pwInput=document.getElementById("gatePw"), gateBtn=document.getElementById("gateBtn"),
+      errorEl=document.getElementById("gateError"), card=document.querySelector(".gate-card");
+  function fail(){ errorEl.classList.add("on"); card.classList.remove("gate-shake"); void card.offsetWidth; card.classList.add("gate-shake"); pwInput.value=""; pwInput.focus(); }
+  function attempt(pw, silent){
+    if(!pw) return;
+    gateBtn.disabled=true;
+    unlock(pw).then(function(content){
+      gateBtn.disabled=false;
+      if(content){ try{ localStorage.setItem(STORAGE_KEY, pw); }catch(e){} reveal(content); }
+      else if(!silent){ fail(); }
+    });
+  }
+  gateBtn.addEventListener("click", function(){ attempt(pwInput.value, false); });
+  pwInput.addEventListener("keydown", function(e){ if(e.key==="Enter") attempt(pwInput.value, false); });
+  var remembered=null; try{ remembered=localStorage.getItem(STORAGE_KEY); }catch(e){}
+  if(remembered) attempt(remembered, true);
+})();
+</script>
+
+</body>
+</html>
