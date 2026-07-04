@@ -44,6 +44,10 @@
     padding:9px 15px;border-radius:10px;border:1px solid #f5c96b;text-decoration:none;}
   .how a.skill-dl:hover{background:#fff8ec;}
   .back-row{max-width:680px;margin:34px auto 0;padding:0 24px;text-align:center;}
+  .building-nav{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin:26px auto 0;max-width:760px;}
+  .building-nav a{font-size:.78rem;font-weight:700;letter-spacing:.04em;padding:6px 12px;border-radius:20px;border:1px solid var(--line);color:#8a8579;text-decoration:none;}
+  .building-nav a:hover{border-color:#f59e0b;color:#b45309;}
+  .building-nav a.here{background:#fff1d6;color:#b45309;border-color:#f5c96b;}
 
   #app{display:none;}
   @media (prefers-reduced-motion: reduce){.say{transition:none;opacity:1;transform:none;}.lob-caret{animation:none;}}
@@ -68,6 +72,15 @@
       <span class="eyebrow" id="heroEyebrow" style="color:#b45309;"></span>
       <h1 id="heroH1"></h1>
       <p class="lead" id="heroLead" style="margin:0 auto;max-width:560px;"></p>
+      <div class="building-nav">
+        <a href="dialog-intelligence.html">The Annex</a>
+        <a href="lobby.html" class="here">The Lobby</a>
+        <a href="studio.html">Studio Floor</a>
+        <a href="pinup.html">Pin-up Wall</a>
+        <a href="modelshop.html">Model Shop</a>
+        <a href="library.html">The Library</a>
+        <a href="boardroom.html">The Boardroom</a>
+      </div>
       <div class="seats" id="seatsMount"></div>
     </div>
   </header>
@@ -90,7 +103,7 @@
   <footer class="site-footer">
     <div class="container">
       <span id="footerLine"></span>
-      <span>Drafted by Shadi, narrated by Claude. &middot; v2026-07-03.2</span>
+      <span>Drafted by Shadi, narrated by Claude. &middot; v2026-07-03.3</span>
     </div>
   </footer>
 </div>
