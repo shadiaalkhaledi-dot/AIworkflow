@@ -59,7 +59,16 @@
     ".road-step p{margin:0;font-size:.88rem;line-height:1.55;color:#5d5a52;}" +
     ".you-are-here{display:inline-block;font-size:.68rem;font-weight:800;letter-spacing:.12em;background:#f59e0b;color:#fff;padding:2px 8px;border-radius:4px;margin-left:8px;vertical-align:2px;}" +
     ".room-note{max-width:640px;margin:34px auto 0;padding:14px 18px;border-left:3px solid #f59e0b;background:#fffaf0;border-radius:0 12px 12px 0;font-size:.9rem;font-style:italic;color:#5d5a52;line-height:1.6;}" +
-    ".room-note.indigo{border-left-color:#4f46e5;background:#f6f7ff;}";
+    ".room-note.indigo{border-left-color:#4f46e5;background:#f6f7ff;}" +
+    "@media(max-width:480px){" +
+      ".pin .pin-date{float:none;display:block;margin:-4px 0 8px;}" +
+      ".road-step{flex-wrap:wrap;}" +
+      ".road-step .num{flex:0 0 28px;height:28px;font-size:.8rem;}" +
+      ".shelf h3{font-size:.95rem;}" +
+      ".room-grid,.pin-wall{gap:14px;}" +
+      ".room-card,.pin{padding:16px;}" +
+      ".you-are-here{display:block;width:max-content;margin:6px 0 0;}" +
+    "}";
   document.head.appendChild(css);
 
   /* ---- crypto ---- */
