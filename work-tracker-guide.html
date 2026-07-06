@@ -159,6 +159,26 @@
 
   <hr>
 
+  <!-- SMART MODEL (2026 update) -->
+  <h2><span class="step-label" style="background:var(--mauve)">✦</span> What makes it think, not just list <span class="tag opt">2026 update</span></h2>
+  <p class="section-sub">A plain to-do list tells you what <em>exists</em>. This one tells you what to <em>do</em> — because your AI reads every item through a few lenses at once, and lets priority fall out instead of guessing it. You don't set any of this up; it's just how the check-in thinks now.</p>
+
+  <div class="callout tip">
+    <strong>The lenses.</strong> Every item quietly answers three questions: <strong>whose move is it</strong> (you, or someone you're waiting on), <strong>how soon</strong> (today, this week, later), and <strong>what kind of work</strong> (make something, review, coordinate, reply, chase). So you can ask your list real questions — "what's actually on <em>me</em> today?", "everything I'm waiting on Sarah for" — instead of scrolling and hoping.
+  </div>
+
+  <div class="callout tip">
+    <strong>Priority you don't throw.</strong> It's two things crossed. <em>Urgency</em> is computed from due dates and what's blocking — you can't inflate it. <em>Importance</em> is a rare flag your AI only raises with a reason. Cross them and you get the four buckets that actually matter: <strong>do now</strong>, <strong>protect</strong> (matters but isn't due — the work a deadline-sort quietly buries), <strong>knock out</strong>, or <strong>let it wait</strong>.
+  </div>
+
+  <div class="callout tip">
+    <strong>The check-in drives.</strong> Instead of you narrating and it transcribing, it reads your list, opens with a five-line triage (overdue · due today · blocking · in your court · gone quiet), asks only what needs a decision, proposes your five for today, and writes the updates for you to confirm. Five minutes, and you did the thinking <em>together</em>.
+  </div>
+
+  <p class="section-sub" style="margin-top:20px;">And it grows views as your work gets busier — a "who owes me" list grouped by person, a per-project overview, a running log of the decisions you've made. That's the whole shift: you stop maintaining a list and start talking to something that already understands how your work flows.</p>
+
+  <hr>
+
   <!-- STEP 0: DOWNLOAD + SETUP -->
   <h2><span class="step-label" style="background:var(--terracotta)">0</span> Download the starter kit and set up your workspace <span class="tag imp">Do this first</span></h2>
   <p class="section-sub">One ZIP, five folders and a VERSION stamp. Each folder goes to a different place — the steps below explain exactly where. Nothing gets installed in the traditional sense; things mostly get copied and pointed at.</p>
@@ -202,8 +222,8 @@
   <p style="font-size:14px;color:var(--muted);margin:0 0 14px;"><code>index.html</code> and <code>data.json</code> — the same two files that are also in your vault. Upload these to a free GitHub Pages repo so you can open your tracker from any browser. Step 2 walks you through this.</p>
 
   <!-- Folder 3: apps-script -->
-  <h3 style="margin:32px 0 6px;font-size:16px;">📁 apps-script/ — Quick Capture backend</h3>
-  <p style="font-size:14px;color:var(--muted);margin:0 0 14px;">One file: <code>code.gs</code>. There is no HTML to deploy here — this is a pure data API. You paste the code into Google Sheets Apps Script, deploy it as a web app, and Google gives you a URL. That URL goes into the <code>"apiUrl"</code> field in your <code>data.json</code> so the tracker knows where to send captures. Step 6 walks through this step by step.</p>
+  <h3 style="margin:32px 0 6px;font-size:16px;">📁 apps-script/ — Quick Capture backend <span class="tag opt">legacy</span></h3>
+  <p style="font-size:14px;color:var(--muted);margin:0 0 14px;">Kept for reference only. The old capture backend was a Google Sheet + Apps Script — we <strong>retired it</strong>. The tracker now captures right in the browser (localStorage) with a <strong>"Copy for check-in"</strong> button: no Google account, no web app, nothing to host. You can skip this folder entirely — see the updated Step 6.</p>
 
   <!-- Folder 4: skills -->
   <h3 style="margin:32px 0 6px;font-size:16px;">📁 skills/ — the pipeline reference</h3>
@@ -388,10 +408,10 @@ Then, if I've set a site password: re-encrypt with tools/encrypt_data.py (data.j
 
   <!-- STEP 6: QUICK CAPTURE (optional) -->
   <h2><span class="step-label">6</span> Quick Capture — log things in real time <span class="tag opt">Optional</span></h2>
-  <p class="section-sub">The tracker's ears. A one-tap capture panel on your live page that files everything into a Google Sheet until your next check-in — for the thoughts that arrive mid-meeting, when opening a chat window would be rude and a sticky note would be a lie.</p>
+  <p class="section-sub">The tracker's ears — for the thoughts that arrive mid-meeting, when opening a chat would be rude and a sticky note would be a lie. The capture panel is built right into your live page: it queues what you type in the browser and gives you a <strong>"Copy for check-in"</strong> button. Next check-in, you paste that and your AI folds it in.</p>
 
-  <div class="callout warn">
-    <strong>Full honesty: this is the most technical step on the page.</strong> It involves Google Apps Script, which sounds scarier than it is — but if it's not your day for it, skip it guilt-free. The check-in workflow already gives you a complete system. This is the optional turbo; come back when the basics are humming.
+  <div class="callout tip">
+    <strong>Update — no backend anymore.</strong> The original version sent captures to a Google Sheet via Apps Script. We <strong>retired that</strong>: capture is now purely in-browser (localStorage), so there's <em>no Google account, no web app, nothing to deploy</em>. Each item also carries its own inline buttons — <em>+ subtask · flag blocking · add note</em> — so you capture right on the thing you're looking at. The detailed Google steps below are kept only as legacy; you can ignore them.
   </div>
 
   <div class="steps">
