@@ -10,7 +10,7 @@
   /* ---- shared room styles ---- */
   var css = document.createElement("style");
   css.textContent =
-    ".hairline{background:linear-gradient(90deg,#f59e0b 0%,#4f46e5 55%,transparent 95%);}" +
+    ".hairline{background:linear-gradient(90deg,#f59e0b 0%,#3fc6ff 48%,#4f46e5 78%,transparent 96%);}" +
     ".room-hero{text-align:center;padding-bottom:8px;}" +
     ".room-hero .eyebrow{color:#b45309;}" +
     ".room-hero p.lead{margin:0 auto;max-width:600px;}" +
@@ -23,6 +23,7 @@
     ".room-card{border-radius:16px;padding:22px;background:#fff;border:1px solid var(--line);}" +
     ".room-card.amber{border-color:#f5c96b;background:linear-gradient(180deg,#fffdf7,#fff8ec);}" +
     ".room-card.reserved{border-style:dashed;border-color:#c7d2fe;background:#fafbff;}" +
+    ".room-card.ben{border-color:#8fd8f7;background:linear-gradient(180deg,#f7fdff,#e8f7ff);}" +
     ".room-card h3{margin:0 0 8px;font-size:1.1rem;}" +
     ".room-card p{font-size:.9rem;line-height:1.6;color:#5d5a52;margin:0 0 10px;}" +
     ".room-card p:last-child{margin-bottom:0;}" +
@@ -32,6 +33,7 @@
     ".rc-tag.green{background:#e3f7ee;color:#0a7d57;}" +
     ".rc-tag.gray{background:#f1efe9;color:#8a8579;}" +
     ".rc-tag.red{background:#fdeceb;color:#b3423a;}" +
+    ".rc-tag.blue{background:#e8f7ff;color:#0b7cb5;}" +
     ".rc-label{display:block;font-size:.7rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#b45309;margin:12px 0 3px;}" +
     ".pin-wall{max-width:860px;margin:36px auto 0;padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:18px;}" +
     "@media(max-width:680px){.pin-wall{grid-template-columns:1fr;}}" +
@@ -60,6 +62,8 @@
     ".you-are-here{display:inline-block;font-size:.68rem;font-weight:800;letter-spacing:.12em;background:#f59e0b;color:#fff;padding:2px 8px;border-radius:4px;margin-left:8px;vertical-align:2px;}" +
     ".room-note{max-width:640px;margin:34px auto 0;padding:14px 18px;border-left:3px solid #f59e0b;background:#fffaf0;border-radius:0 12px 12px 0;font-size:.9rem;font-style:italic;color:#5d5a52;line-height:1.6;}" +
     ".room-note.indigo{border-left-color:#4f46e5;background:#f6f7ff;}" +
+    ".room-note.blue{border-left-color:#0b7cb5;background:#e8f7ff;}" +
+    ".room-note .who{display:block;font-size:.68rem;font-style:normal;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#0b7cb5;margin-bottom:5px;}" +
     "@media(max-width:480px){" +
       ".pin .pin-date{float:none;display:block;margin:-4px 0 8px;}" +
       ".road-step{flex-wrap:wrap;}" +
@@ -92,8 +96,10 @@
     studio: function (c, mount) {
       var grid = el("div","room-grid");
       c.desks.forEach(function(d){
-        var card = el("div","room-card " + (d.owner === "amber" ? "amber" : "reserved"));
-        var tag = el("span","rc-tag " + (d.owner === "amber" ? "amber" : "indigo"), d.tag);
+        var ownerCls = d.owner === "amber" ? "amber" : d.owner === "ben" ? "ben" : "reserved";
+        var tagCls = d.owner === "amber" ? "amber" : d.owner === "ben" ? "blue" : "indigo";
+        var card = el("div","room-card " + ownerCls);
+        var tag = el("span","rc-tag " + tagCls, d.tag);
         card.appendChild(tag);
         if (d.status) card.appendChild(el("span","rc-tag " + (d.status === "live" ? "green" : d.status === "evolving" ? "amber" : "gray"), d.status));
         card.appendChild(el("h3",null,d.name));
@@ -204,15 +210,26 @@
     if (ld) ld.textContent = c.lead;
     /* building nav */
     var navMount = document.getElementById("buildingNav");
-    if (navMount && content.building){
-      content.building.forEach(function(b){
-        var a = el("a", b.href === (room + ".html") ? "here" : null, b.name);
-        a.href = b.href;
-        navMount.appendChild(a);
-      });
+    if (navMount){
+      if (window.renderFloorplan){
+        window.renderFloorplan(navMount, room);
+      } else if (content.building){
+        content.building.forEach(function(b){
+          var a = el("a", b.href === (room + ".html") ? "here" : null, b.name);
+          a.href = b.href;
+          navMount.appendChild(a);
+        });
+      }
     }
     var mount = document.getElementById("roomMount");
     render[room](c, mount);
+    /* Feynman's blue co-note — the second voice, appended to any room that carries one. */
+    if (c.coNote){
+      var cn = el("div","room-note blue");
+      cn.appendChild(el("span","who","Ben's — Feynman"));
+      cn.appendChild(document.createTextNode(c.coNote));
+      mount.appendChild(cn);
+    }
     document.getElementById("app").style.display = "block";
   }
 
