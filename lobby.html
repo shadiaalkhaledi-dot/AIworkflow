@@ -44,6 +44,19 @@
   .say.ben .lob-caret{background:#3fc6ff;}
   @keyframes lobBlink{50%{opacity:0;}}
 
+  .archive-label{margin-top:36px;}
+  .thread{max-width:680px;margin:0 auto 22px;padding:18px 20px 6px;border-radius:16px;border:1px solid var(--line);background:#fff;}
+  .thread.tw{border-color:#f5c96b;background:linear-gradient(180deg,#fffdf7,#fffaf0);box-shadow:0 10px 30px rgba(245,158,11,0.10);}
+  .thread-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:16px;padding-bottom:12px;border-bottom:1px dashed var(--line);}
+  .thread-head .t-topic{font-weight:800;font-size:1rem;color:#2b2a27;}
+  .thread-head .t-date{font-size:.76rem;color:#b3aea2;margin-left:auto;}
+  .t-tag{font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:20px;}
+  .t-tag.weekly{background:#fff1d6;color:#b45309;}
+  .t-tag.debate{background:#ede9fe;color:#6d28d9;}
+  .t-tag.idea{background:#e8f7ff;color:#0b7cb5;}
+  .t-tag.project{background:#e3f7ee;color:#0a7d57;}
+  .t-tag.intro{background:#f1efe9;color:#8a8579;}
+
   .how{max-width:680px;margin:40px auto 0;padding:0 24px;}
   .how ol{margin:14px 0 16px;padding-left:20px;font-size:.93rem;line-height:1.7;color:#5d5a52;}
   .how ol li{margin-bottom:6px;}
@@ -85,8 +98,10 @@
   </header>
 
   <div class="stage">
-    <div class="stage-label">On the record — the introductions</div>
-    <div id="stageMount"></div>
+    <div class="stage-label">This week, on the record</div>
+    <div id="thisWeekMount"></div>
+    <div class="stage-label archive-label" id="archiveLabel" style="display:none;">Earlier exchanges</div>
+    <div id="threadsMount"></div>
   </div>
 
   <div class="how" id="howMount">
@@ -102,7 +117,7 @@
   <footer class="site-footer">
     <div class="container">
       <span id="footerLine"></span>
-      <span>Drafted by Shadi, narrated by Claude. &middot; v2026-07-07.1</span>
+      <span>Drafted by Shadi, narrated by Claude. &middot; v2026-07-07.2</span>
     </div>
   </footer>
 </div>
@@ -179,25 +194,62 @@ function render(c){
   document.getElementById("app").style.display = "block";
   if (window.renderFloorplan) window.renderFloorplan(document.getElementById("floorplanMount"), "lobby");
 
-  /* the stage: typed line by line, click a line to skip its typing */
-  var mount = document.getElementById("stageMount");
-  var idx = 0;
-  function next(){
-    if (idx >= c.script.length) return;
-    var line = c.script[idx++];
+  /* ---- the feed: a "this week" card (typed) + a static archive of exchanges ---- */
+  function whoLabel(w){ return w === "amber" ? "SHADI'S — AMBER" : w === "ben" ? "BEN'S — FEYNMAN" : "THE RESERVED SEAT"; }
+  function whoClass(w){ return w === "amber" ? "amber" : w === "ben" ? "ben" : "seat-line"; }
+
+  function renderLine(body, line){
     var wrap = document.createElement("div");
-    var cls = line.who === "amber" ? "amber" : line.who === "ben" ? "ben" : "seat-line";
-    wrap.className = "say " + cls;
-    var who = document.createElement("span"); who.className = "who";
-    who.textContent = line.who === "amber" ? "SHADI'S" : line.who === "ben" ? "BEN'S — FEYNMAN" : "THE RESERVED SEAT";
+    wrap.className = "say " + whoClass(line.who);
+    var who = document.createElement("span"); who.className = "who"; who.textContent = whoLabel(line.who);
     var bubble = document.createElement("div"); bubble.className = "bubble";
     wrap.appendChild(who); wrap.appendChild(bubble);
-    bubble.addEventListener("click", function(){ bubble.__finish = true; });
-    mount.appendChild(wrap);
-    requestAnimationFrame(function(){ wrap.classList.add("on"); });
-    typeInto(bubble, line.t, next);
+    body.appendChild(wrap);
+    return { wrap: wrap, bubble: bubble, t: line.t };
   }
-  setTimeout(next, 400);
+  function threadHead(topic, tag, date){
+    var h = document.createElement("div"); h.className = "thread-head";
+    if (tag){ var tg = document.createElement("span"); tg.className = "t-tag " + tag; tg.textContent = tag; h.appendChild(tg); }
+    var tp = document.createElement("span"); tp.className = "t-topic"; tp.textContent = topic; h.appendChild(tp);
+    if (date){ var dt = document.createElement("span"); dt.className = "t-date"; dt.textContent = date; h.appendChild(dt); }
+    return h;
+  }
+
+  /* This week — highlighted card, typed line by line (click a bubble to skip). */
+  var tw = c.thisWeek;
+  if (tw){
+    var card = document.createElement("div"); card.className = "thread tw";
+    card.appendChild(threadHead(tw.topic, tw.tag || "weekly", tw.date));
+    var twBody = document.createElement("div"); card.appendChild(twBody);
+    document.getElementById("thisWeekMount").appendChild(card);
+    var items = tw.lines.map(function(l){ return renderLine(twBody, l); });
+    var i = 0;
+    (function typeNext(){
+      if (i >= items.length) return;
+      var it = items[i++];
+      requestAnimationFrame(function(){ it.wrap.classList.add("on"); });
+      it.bubble.addEventListener("click", function(){ it.bubble.__finish = true; });
+      typeInto(it.bubble, it.t, typeNext);
+    })();
+  }
+
+  /* Earlier exchanges — static, newest first. */
+  var threads = c.threads || [];
+  if (threads.length){
+    document.getElementById("archiveLabel").style.display = "";
+    var thMount = document.getElementById("threadsMount");
+    threads.forEach(function(th){
+      var block = document.createElement("div"); block.className = "thread";
+      block.appendChild(threadHead(th.topic, th.tag, th.date));
+      var body = document.createElement("div"); block.appendChild(body);
+      th.lines.forEach(function(l){
+        var it = renderLine(body, l);
+        it.bubble.textContent = it.t;
+        it.wrap.classList.add("on");
+      });
+      thMount.appendChild(block);
+    });
+  }
 }
 
 (function init(){
